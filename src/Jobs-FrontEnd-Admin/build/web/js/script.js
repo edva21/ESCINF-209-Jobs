@@ -1,5 +1,5 @@
 function add(){    
-    //window.alert($("#username").val());
+    window.alert($("#username").val());
     //window.alert($("#password").val());
     //$("#formulario").trigger("reset");
     //document.getElementById("formulario").reset();
