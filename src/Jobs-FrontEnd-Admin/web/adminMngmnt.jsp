@@ -51,14 +51,14 @@
     </div>
     <hr>
     <div class="col-sm-4">
-        <table class="table-bordered">
+        <table class="table table-striped table-bordered">
         <thead>
           <tr>
             <th>Nombre de Usuario</th>
             <th>Contrasena</th>
           </tr>
         </thead>
-        <tbody id="list">
+        <tbody id="list" name="list">
             <%int x = 0; for(BussinessLogic.Administrador a : administradores){ %>            
                 <div class="item">
                     <tr>
@@ -68,11 +68,11 @@
                         <td>
                             <%=a.getAdministradorClave()%>
                         </td>
-                        <td>
-                            <button type="button" class="btn btn-outline-danger">Eliminar</button>
+                        <td>                            
+                                <button type="button" onclick="javascript:add()" class="btn btn-outline-danger">Eliminar</button>                                                     
                         </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary">Editar</button>
+                        <td>                           
+                                <button type="button" onclick="javascript:add()" class="btn btn-secondary">Editar</button>                            
                         </td>
                     </tr>
                 </div>
