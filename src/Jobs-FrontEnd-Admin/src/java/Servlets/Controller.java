@@ -33,6 +33,7 @@ public class Controller extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         if (request.getServletPath().equals("/adminMngmnt")) {
+            request.setAttribute("administradores",Model.Model.getInstance().readAllAdministrador());
             request.getRequestDispatcher("adminMngmnt.jsp").forward(request, response);
         }
         /*try (PrintWriter out = response.getWriter()) {

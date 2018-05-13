@@ -4,6 +4,7 @@
     Author     : edva5
 --%>
 
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,6 +20,7 @@
     <script src="js/script.js"></script>
         </head>
       <body>
+          <jsp:useBean id="administradores" scope="request" type="List<BussinessLogic.Administrador>" class="java.util.ArrayList" />
           <div class="jumbotron text-center">
          <h1>Administración de Administradores</h1>
         <p>Agregue, Elimine o Edite Administradores</p>
@@ -58,6 +60,18 @@
           </tr>
         </thead>
         <tbody id="list">
+            <%int x = 0; for(BussinessLogic.Administrador a : administradores){ %>            
+                <div class="item">
+                    <tr>
+                        <td>
+                            <%=a.getAdministradorUserName()%>
+                        </td>
+                        <td>
+                            <%=a.getAdministradorClave()%>
+                        </td>
+                    </tr>
+                </div>
+            <%}%>
         </tbody>
       </table>
     </div>
