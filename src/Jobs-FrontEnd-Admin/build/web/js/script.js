@@ -66,6 +66,9 @@ function showErrorMessage(obj){
     $("#password_error").text("Ingrese una Contrasenha");
   }
 }
-function lalo(){
-        $("#username_error").text("Ingrese un nombre de Usuario");
+function remove(x){
+        alert(x.closest("tr")   // Finds the closest row <tr> 
+                       .find(".nr")     // Gets a descendent with class="nr"
+                       .text()         // Retrieves the text within <td>
+);
     }
