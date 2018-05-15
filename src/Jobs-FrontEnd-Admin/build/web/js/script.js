@@ -67,8 +67,6 @@ function showErrorMessage(obj){
   }
 }
 function remove(x){
-        alert(x.closest("tr")   // Finds the closest row <tr> 
-                       .find(".nr")     // Gets a descendent with class="nr"
-                       .text()         // Retrieves the text within <td>
-);
+        alert(x._proto_.toString());
+
     }
