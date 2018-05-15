@@ -1,17 +1,18 @@
-function add(){    
-    window.alert($("#username").val());
-    //window.alert($("#password").val());
-    //$("#formulario").trigger("reset");
-    //document.getElementById("formulario").reset();
-  var admin = {
-    administradorUserName:$("#username").val(),
-    administradorClave:$("#password").val()
-  }  
-  if (check(admin)) {    
-    addToDataBase(admin);
-    //updateList(admin);
-  }
-}
+
+        function add(){    
+        window.alert($("#username").val());
+        //window.alert($("#password").val());
+        //$("#formulario").trigger("reset");
+        //document.getElementById("formulario").reset();
+      var admin = {
+        administradorUserName:$("#username").val(),
+        administradorClave:$("#password").val()
+      }  
+      if (check(admin)) {    
+        addToDataBase(admin);
+        //updateList(admin);
+      }
+    }
 function updateList(obj){
   //var list =$("#list");
   //window.alert(obj.administradorUserName);
@@ -65,3 +66,6 @@ function showErrorMessage(obj){
     $("#password_error").text("Ingrese una Contrasenha");
   }
 }
+function lalo(){
+        $("#username_error").text("Ingrese un nombre de Usuario");
+    }

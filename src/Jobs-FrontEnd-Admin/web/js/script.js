@@ -1,6 +1,4 @@
-    function remove(){    
-        window.alert("x.rowIndex");
-    }
+
         function add(){    
         window.alert($("#username").val());
         //window.alert($("#password").val());
@@ -68,3 +66,6 @@ function showErrorMessage(obj){
     $("#password_error").text("Ingrese una Contrasenha");
   }
 }
+function lalo(){
+        $("#username_error").text("Ingrese un nombre de Usuario");
+    }
