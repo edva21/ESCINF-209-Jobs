@@ -12,10 +12,61 @@
     <meta charset="utf-8">
     <title>Administradores</title>
     <link rel="stylesheet" href="css/master.css">    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>      
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">         
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         </head>
       <body>
+          <jsp:useBean id="puestos" scope="request" type="List<BussinessLogic.Puesto>" class="java.util.ArrayList" />
+<div class="container">
+  <h2>Top 5 Puestos</h2>  
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+     <ol class="carousel-indicators">
+         <c:forEach var = "i" begin ="0" end="${puestos.size()-1}">
+             <c:choose>
+                 <c:when test="${i == 0}">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                 </c:when>
+                 <c:otherwise>
+                    <li data-target="#myCarousel" data-slide-to="${i}"></li>
+                 </c:otherwise>
+             </c:choose>
+        </c:forEach>
+    </ol>
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        
+        <%int x = 0; for(BussinessLogic.Puesto p : puestos){ %>
+            <%if(x == 1){%>
+            <div class="item">
+                        <h1> &nbsp <%=p.getPuestoNombre()%></h1> 
+                        <h1>&nbsp <%=p.getPuestoDescripcion()%></h1>
+                        <h1>&nbsp <%=p.getPuestoSalario()%></h1>
+                        <h1>&nbsp <%=p.getPuestoActivo()%></h1> 
+                </div>
+            <%}%>
+            <%if(x == 0){ x = 1;%>
+                    <div class="item active">
+                        <h1> &nbsp <%=p.getPuestoNombre()%></h1> 
+                        <h1>&nbsp <%=p.getPuestoDescripcion()%></h1>
+                        <h1>&nbsp <%=p.getPuestoSalario()%></h1>
+                        <h1>&nbsp <%=p.getPuestoActivo()%></h1> 
+                    </div>
+            <% } %>
+        <% } %>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
           <script src="js/script.js"></script>
           <jsp:useBean id="administradores" scope="request" type="List<BussinessLogic.Administrador>" class="java.util.ArrayList" />
           <div class="jumbotron text-center">
@@ -57,7 +108,7 @@
           </tr>
         </thead>
         <tbody id="list" name="list">
-            <%int x = 0; for(BussinessLogic.Administrador a : administradores){ %>            
+            <%int i = 0; for(BussinessLogic.Administrador a : administradores){ %>            
                 <div class="item">
                     <tr>
                         <td>

@@ -67,6 +67,6 @@ function showErrorMessage(obj){
   }
 }
 function remove(x){
-        alert(x._proto_.toString());
+        alert(x.toString());
 
     }

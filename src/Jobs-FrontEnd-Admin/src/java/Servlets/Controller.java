@@ -34,6 +34,7 @@ public class Controller extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         if (request.getServletPath().equals("/adminMngmnt")) {
             request.setAttribute("administradores",Model.Model.getInstance().readAllAdministrador());
+            request.setAttribute("puestos", Model.Model.getInstance().readAllPuesto());
             request.getRequestDispatcher("adminMngmnt.jsp").forward(request, response);
         }
         /*try (PrintWriter out = response.getWriter()) {
