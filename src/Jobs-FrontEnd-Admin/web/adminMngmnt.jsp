@@ -69,10 +69,10 @@
                             <%=a.getAdministradorClave()%>
                         </td>
                         <td>                            
-                                <button type="button" onclick="javascript:add()" class="btn btn-outline-danger">Eliminar</button>                                                     
+                                <button type="button" onclick="remove()" class="btn btn-outline-danger">Eliminar</button>                                                     
                         </td>
                         <td>                           
-                                <button type="button" onclick="javascript:add()" class="btn btn-secondary">Editar</button>                            
+                                <button type="button" onclick="add()" class="btn btn-secondary">Editar</button>                            
                         </td>
                     </tr>
                 </div>
