@@ -213,6 +213,14 @@ public class Model {
             return new ArrayList();
         }
     }
+    public List<Oferente> readAllOferenteEnEspera(){
+        try {
+            return DataAccess.OferenteDAO.getInstance().oferenteEsperaListar();
+        } catch (Exception ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            return new ArrayList();
+        }
+    }
     public List<OferenteHasHabilidad> readAllOferenteHasHabilidad(){
         try {
             return DataAccess.OferenteHashabilidadDAO.getInstance().oferenteHasHabilidadListar();            
