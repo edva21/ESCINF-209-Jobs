@@ -94,7 +94,21 @@ private static OferenteDAO INSTANCE;
          desconectar();
         return  resultado;
     }
-    
+    public List<Oferente> oferenteEsperaListar(){
+         getConnection();
+        List<Oferente> resultado=new ArrayList<>();
+        try {
+            String sql="select * from Oferente where OferenteEstadoDeCuenta='ESPERA'";            
+            ResultSet rs =  executeQuery(sql);
+            while (rs.next()) {
+                resultado.add(oferente(rs));
+            }        
+        } catch (SQLException ex) {
+            Logger.getLogger(OferenteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         desconectar();
+        return  resultado;
+    }
     public void oferenteIngresar(Oferente a) throws Exception{
        getConnection();
         String sql="INSERT INTO Oferente (OferenteEmail,OferenteCedula,OferenteNombre,OferenteApellido,OferenteTelefono,"
