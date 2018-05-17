@@ -13,8 +13,10 @@
     <title>Administradores</title>
     <link rel="stylesheet" href="css/master.css">    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">         
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>        
         </head>
       <body>
           <jsp:useBean id="puestos" scope="request" type="List<BussinessLogic.Puesto>" class="java.util.ArrayList" />
@@ -118,10 +120,10 @@
                             <%=a.getAdministradorClave()%>
                         </td>
                         <td>                            
-                                <button type="button" onclick="remove(this)" class="btn btn-outline-danger">Eliminar</button>                                                     
+                                <button id="<%=a.getAdministradorUserName()%>" type="button" onclick="remove(this)" class="btn btn-outline-danger">Eliminar</button>                                                     
                         </td>
                         <td>                           
-                                <button type="button" onclick="remove(this)" class="btn btn-secondary">Editar</button>                            
+                                <button id="<%=a.getAdministradorUserName()%>" type="button" onclick="update(this)" class="btn btn-secondary">Editar</button>                            
                         </td>
                     </tr>
                 </div>

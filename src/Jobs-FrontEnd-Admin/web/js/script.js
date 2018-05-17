@@ -67,6 +67,8 @@ function showErrorMessage(obj){
   }
 }
 function remove(x){
-        alert(x.toString());
-
+        alert("Remove:"+x.id);
+    }
+function update(x){
+        alert("Update:"+x.id);
     }

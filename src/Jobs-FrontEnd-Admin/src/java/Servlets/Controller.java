@@ -31,11 +31,17 @@ public class Controller extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        if (request.getServletPath().equals("/adminMngmnt")) {
+        response.setContentType("text/html;charset=UTF-8");        
+        switch(request.getServletPath()){
+            case "/adminMngmnt":
             request.setAttribute("administradores",Model.Model.getInstance().readAllAdministrador());
             request.setAttribute("puestos", Model.Model.getInstance().readAllPuesto());
             request.getRequestDispatcher("adminMngmnt.jsp").forward(request, response);
+                break;
+            case "/adminOferentes":
+                request.setAttribute("oferentes", Model.Model.getInstance().readAllOferenteEnEspera());
+                request.getRequestDispatcher("adminOferentes.jsp").forward(request, response);
+                break;
         }
         /*try (PrintWriter out = response.getWriter()) {
             
