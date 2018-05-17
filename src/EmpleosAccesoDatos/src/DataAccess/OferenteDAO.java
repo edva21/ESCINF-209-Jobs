@@ -112,7 +112,7 @@ private static OferenteDAO INSTANCE;
     public void oferenteIngresar(Oferente a) throws Exception{
        getConnection();
         String sql="INSERT INTO Oferente (OferenteEmail,OferenteCedula,OferenteNombre,OferenteApellido,OferenteTelefono,"
-                + "OferenteResidencia,OferenteCurriculum,OferenteEstadoDeCuenta,OferenteUserName,OferenteClave,OferenteNacionalidad) VALUES('%s','%s','%s','%s','%s','%s','%x','%s','%s','%s','%s')";
+                + "OferenteResidencia,OferenteCurriculum,OferenteEstadoDeCuenta,OferenteUserName,OferenteClave,Nacionalidad) VALUES('%s','%s','%s','%s','%s','%s','%x','%s','%s','%s','%s')";
         sql=String.format(sql,a.getOferenteEmail(),a.getOferenteCedula(),a.getOferenteNombre(),a.getOferenteApellido(),
         a.getOferenteTelefono(),a.getOferenteResidencia(),a.getOferenteCurriculum(),a.getOferenteEstadoDeCuenta(),a.getOferenteUserName(),
         a.getOferenteClave(),a.getOferenteNacionalidad());
