@@ -24,12 +24,21 @@
   <table class="table table-dark table-hover">
     <thead>
       <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
+        <th>Email:</th>
+        <th>Cedula:</th>
+        <th>Nombre:</th>
+        <th>Apellido:</th>
       </tr>
     </thead>
     <tbody>
+        <%int i = 0; for(BussinessLogic.Oferente o : oferentes){ %>      
+             <tr>
+                <td> <%=o.getOferenteEmail()%></td>
+                <td> <%=o.getOferenteCedula()%></td>
+                <td> <%=o.getOferenteNombre()%></td>
+                <td> <%=o.getOferenteApellido()%></td>
+             </tr>
+        <% } %>
       <tr>
         <td>John</td>
         <td>Doe</td>
