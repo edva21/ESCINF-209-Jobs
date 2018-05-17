@@ -41,7 +41,7 @@ private static OferenteDAO INSTANCE;
             a.setOferenteResidencia(rs.getString("OferenteResidencia"));
             a.setOferenteTelefono(rs.getString("OferenteTelefono"));
             a.setOferenteUserName(rs.getString("OferenteUserName"));
-            a.setOferenteNacionalidad(rs.getString("OferenteNacionalidad"));
+            a.setOferenteNacionalidad(rs.getString("Nacionalidad"));
             return a;
         } catch (SQLException ex) {
             Logger.getLogger(OferenteDAO.class.getName()).log(Level.SEVERE, null, ex);
