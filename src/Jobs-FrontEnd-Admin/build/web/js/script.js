@@ -68,7 +68,30 @@ function showErrorMessage(obj){
 }
 function remove(x){
         alert("Remove:"+x.id);
+        $("#"+x.id).remove();
     }
 function update(x){
         alert("Update:"+x.id);
     }
+function aproveOferente(x){
+    alert("aproveOferente:"+x.id);
+    $("#"+x.id).remove();
+    /*data=new FormData();
+    data.append("objeto",JSON.stringify(x.id));
+    $.ajax({type: "POST", 
+                  url:"aproveOferente", 
+                  data:data,
+                  datatype:'json',
+                  processData: false,
+                  contentType: false,                  
+                  success: 
+                    function(object){
+                        updateList(object); 
+                        $("#"+x.id).trigger("reset").remove();*/
+                        //alert("success : "+object.administradorUserName);
+                    /*},
+                  error: function(status){
+                         window.alert("Error");
+                    }                    
+                }); */
+}

@@ -112,7 +112,7 @@
         <tbody id="list" name="list">
             <%int i = 0; for(BussinessLogic.Administrador a : administradores){ %>            
                 <div class="item">
-                    <tr>
+                    <tr id="<%=a.getAdministradorUserName()%>">
                         <td>
                             <%=a.getAdministradorUserName()%>
                         </td>
