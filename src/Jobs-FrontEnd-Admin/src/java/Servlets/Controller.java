@@ -35,7 +35,7 @@ public class Controller extends HttpServlet {
         switch(request.getServletPath()){
             case "/adminMngmnt":
                request.setAttribute("oferentes", Model.Model.getInstance().readAllOferenteEnEspera());
-                request.getRequestDispatcher("adminOferentes.jsp").forward(request, response);
+                request.getRequestDispatcher("adminOferente.jsp").forward(request, response);
       //request.setAttribute("administradores",Model.Model.getInstance().readAllAdministrador());
       //request.setAttribute("puestos", Model.Model.getInstance().readAllPuesto());
       //request.getRequestDispatcher("adminMngmnt.jsp").forward(request, response);

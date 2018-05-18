@@ -74,17 +74,17 @@ function update(x){
         alert("Update:"+x.id);
     }
 function aproveOferente(x){
-    alert(x.id);
-    //changeEstadoOferente(x,"APROVADO") 
+    //alert(x.id);
+    changeEstadoOferente(x,"APROVADO") 
 }
 function disaproveOferente(x){
-    alert(x.id);
-    //changeEstadoOferente(x,"DENEGADO") 
+    //alert(x.id);
+    changeEstadoOferente(x,"DENEGADO") 
 }
 function changeEstadoOferente(x,estado){    
     alert(x.id+" "+estado);
-    $( "tr"+x.id).remove();
-    
+    $("tr#"+x.id).remove();
+   
     data=new FormData();
     data.append("Email",x.id);
     data.append("Estado",estado);
