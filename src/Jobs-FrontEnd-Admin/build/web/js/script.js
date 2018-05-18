@@ -75,7 +75,7 @@ function update(x){
     }
 function aproveOferente(x){
     alert("aproveOferente:"+x.id);
-    $("#"+x.id).remove();
+    $( '#' +x.id).remove();
     /*data=new FormData();
     data.append("objeto",JSON.stringify(x.id));
     $.ajax({type: "POST", 
