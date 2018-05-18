@@ -74,24 +74,28 @@ function update(x){
         alert("Update:"+x.id);
     }
 function aproveOferente(x){
-    alert("aproveOferente:"+x.id);
-    $( '#' +x.id).remove();
-    /*data=new FormData();
-    data.append("objeto",JSON.stringify(x.id));
+    changeEstadoOferente(x,"APROVADO") 
+}
+function disaproveOferente(x){
+    changeEstadoOferente(x,"DENEGADO") 
+}
+function changeEstadoOferente(x,estado){    
+    $( "tr"+x.id).remove();
+    
+    data=new FormData();
+    data.append("Email",x.id);
+    data.append("Estado",estado);
     $.ajax({type: "POST", 
-                  url:"aproveOferente", 
-                  data:data,
-                  datatype:'json',
+                  url:"changeEstadoOferente", 
+                  data:data,                  
                   processData: false,
                   contentType: false,                  
                   success: 
-                    function(object){
-                        updateList(object); 
-                        $("#"+x.id).trigger("reset").remove();*/
-                        //alert("success : "+object.administradorUserName);
-                    /*},
+                    function(object){                        
+                        $("#"+x.id).remove();                        
+                    },
                   error: function(status){
                          window.alert("Error");
                     }                    
-                }); */
+                }); 
 }

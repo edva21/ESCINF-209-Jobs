@@ -102,7 +102,7 @@
     </div>
     <hr>
     <div class="col-sm-4">
-        <table class="table table-striped table-bordered">
+        <table class="table table-dark table-hover">
         <thead>
           <tr>
             <th>Nombre de Usuario</th>

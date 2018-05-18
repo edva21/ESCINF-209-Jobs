@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author edva5
  */
-@MultipartConfig @WebServlet(name = "Administradores", urlPatterns = {"/Administradores","/add"})
+@MultipartConfig @WebServlet(name = "Administradores", urlPatterns = {"/Administradores","/add","/aproveOferente","/changeEstadoOferente"})
 public class ControllerAdmin extends HttpServlet {
 
     /**
@@ -51,6 +51,9 @@ public class ControllerAdmin extends HttpServlet {
             }
          }
               break;
+           case "/changeEstadoOferente":
+               doSetEstado(request, response);
+               break;           
           default:
               break;
       }           
@@ -76,6 +79,25 @@ public class ControllerAdmin extends HttpServlet {
         }
        
         
+    }
+    private void doSetEstado(HttpServletRequest request, HttpServletResponse response){                
+         try {
+        Reader personaReader = new BufferedReader(new InputStreamReader(request.getPart("objeto").getInputStream()));
+        Gson gson = new Gson();
+        Administrador object = gson.fromJson(personaReader, Administrador.class);
+        PrintWriter out;
+        out = response.getWriter();
+         Model.Model.getInstance().create(object);        
+        response.setContentType("application/json; charset=UTF-8");
+        out.write(gson.toJson(object));        
+        response.setStatus(200); // ok with content
+        } catch (IOException ex) {
+            response.setStatus(401); 
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ServletException ex) {
+            response.setStatus(401); 
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
