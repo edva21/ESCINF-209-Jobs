@@ -310,4 +310,13 @@ public class Model {
             return false;
         }
     }
+    public boolean login(Empresa obj){
+        try{
+             Empresa empresa = DataAccess.EmpresaDAO.getInstance().empresaGet(obj.getEmpresaEmail()); 
+            return empresa!= null && obj.getEmpresaClave().equals(empresa.getEmpresaClave());
+        }
+        catch(Exception ex){
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            return false;}         
+    }
 }
