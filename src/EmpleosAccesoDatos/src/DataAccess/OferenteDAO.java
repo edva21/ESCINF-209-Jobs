@@ -119,5 +119,19 @@ private static OferenteDAO INSTANCE;
          desconectar();
     }
     
-    
+    public List<Oferente> oferenteEsperaListar(){
+         getConnection();
+        List<Oferente> resultado=new ArrayList<>();
+        try {
+            String sql="select * from Oferente where OferenteEstadoDeCuenta='ESPERA'";            
+            ResultSet rs =  executeQuery(sql);
+            while (rs.next()) {
+                resultado.add(oferente(rs));
+            }        
+        } catch (SQLException ex) {
+            Logger.getLogger(OferenteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         desconectar();
+        return  resultado;
+    }
 }
