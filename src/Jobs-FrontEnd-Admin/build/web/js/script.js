@@ -83,7 +83,7 @@ function disaproveOferente(x){
 }
 function changeEstadoOferente(x,estado){    
     alert(x.id+" "+estado);
-    $("tr#"+x.id).remove();
+    $("#"+x.id).remove();
    
     data=new FormData();
     data.append("Email",x.id);
