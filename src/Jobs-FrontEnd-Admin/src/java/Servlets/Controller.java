@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author edva5
  */
-@WebServlet(name = "Navigator", urlPatterns = {"/Navigator","/adminMngmnt"})
+@WebServlet(name = "Navigator", urlPatterns = {"/Navigator","/adminMngmnt","/adminOferente"})
 public class Controller extends HttpServlet {
 
     /**
@@ -36,6 +36,10 @@ public class Controller extends HttpServlet {
             request.setAttribute("administradores",Model.Model.getInstance().readAllAdministrador());
             request.getRequestDispatcher("adminMngmnt.jsp").forward(request, response);
         }
+        else if(request.getServletPath().equals("/adminOferente")){
+            request.setAttribute("oferentes",Model.Model.getInstance().readAllOferenteEnEspera());
+            request.getRequestDispatcher("adminOferente.jsp").forward(request, response);
+        }                
         /*try (PrintWriter out = response.getWriter()) {
             
             out.println("<!DOCTYPE html>");
