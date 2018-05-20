@@ -6,7 +6,7 @@
 package Servlets;
 
 
-import BussinesLogic.MensajeEstado;
+import FEBussinesLogic.MensajeEstado;
 import BussinessLogic.Administrador;
 import BussinessLogic.Nacionalidad;
 import com.google.gson.Gson;

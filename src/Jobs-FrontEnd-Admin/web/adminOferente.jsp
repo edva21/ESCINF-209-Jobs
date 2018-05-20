@@ -9,43 +9,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-git.js"></script>
  <meta charset="utf-8">
  <meta name="viewport" content-width="device-width">
  <title>Remove a specific table row using jQuery.</title>
+ <link rel="stylesheet" href="css/adminOferente.css">
  </head>
  <body>
-     <jsp:useBean id="oferentes" scope="request" type="List<BussinessLogic.Oferente>" class="java.util.ArrayList" />
-   <script src="js/adminOferente.js">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+     <script src="js/adminOferente.js">
+     <jsp:useBean id="oferentes" scope="request" type="List<BussinessLogic.Oferente>" class="java.util.ArrayList" />   
    </script>
  <table id="mytable">
  <tr>
+     <th>Info</th>
   <th>Email</th>
   <th>Nombre</th>
   <th>Apellidos</th>
   <th>Outro1</th>
   <th>Outro2</th>
   </tr>
-  <tr id="r1">
-  <td>Rahul</td>
-  <td>Sethi</td>
-  <td> <button type="button" id="r1" onclick="removeRow(this)">Click Me!</button> </td>
-  </tr>
-  <tr id="r2">
-   <td>Sara</td>
-   <td>Rayy</td>
-   <td> <button type="button" id="r2" onclick="removeRow(this)">Click Me!</button> </td>
-   </tr>
    <%int x = 0;for(BussinessLogic.Oferente o : oferentes){ %>                            
-   <tr>
+   <tr id="#<%=o.getOferenteEmail()%>">
+       <td><a href="#<%=o.getOferenteEmail()%>modal">+</a></td>
        <td><%=o.getOferenteEmail()%></td>
        <td><%=o.getOferenteNombre()%></td>
        <td><%=o.getOferenteApellido()%></td>       
-       <td> <button type="button" id="<%=o.getOferenteEmail()%>"  onclick="aproveOferente(this)">Aceptar</button> </td>
-       <td> <button type="button" id="<%=o.getOferenteEmail()%>"  onclick="disaproveOferente(this)">Denegar</button> </td>
+       <td> <button type="button"  class="<%=o.getOferenteEmail()%>" onclick="aproveOferente(this)">Aceptar</button> </td>
+       <td> <button type="button"  class="<%=o.getOferenteEmail()%>" onclick="disaproveOferente(this)">Denegar</button> </td>
    </tr>        
             <%}%>
    </table>
-   <p> <input id="button1" type="button" value="Click to remove 2nd Row." /></p>
+
+
+<%for(BussinessLogic.Oferente o : oferentes){ %>   
+<div id="<%=o.getOferenteEmail()%>modal" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close">X</a>
+		<h2><%=o.getOferenteEmail()%></h2>		
+                <p>Email:<%=o.getOferenteEmail()%></p>                   
+                <p>Cedula:<%=o.getOferenteCedula()%></p>  
+                <p>Nombre:<%=o.getOferenteNombre()%></p>                   
+                <p>Telefono:<%=o.getOferenteTelefono()%></p>                   
+                <p>Residencia:<%=o.getOferenteResidencia()%></p>                   
+                <p>Nombre de Usuario:<%=o.getOferenteUserName()%></p>   
+                <p>Nacionalidad:<%=o.getOferenteNacionalidad()%></p>     
+                <td> <button type="button"  class="<%=o.getOferenteEmail()%>" onclick="aproveOferente(this)">Aceptar</button> </td>
+                <td> <button type="button"  class="<%=o.getOferenteEmail()%>" onclick="disaproveOferente(this)">Denegar</button> </td>
+	</div>
+    </div>
+<%}%>
 </body>
 </html>

@@ -1,9 +1,10 @@
 function remove(x){
-  $('#'+x.id).remove();
+  $('tr#'+x.class).remove();
 }
 
-function removeRow(x){
-    x.parentNode.parentNode.style.display = 'none';
+function removeRow(x){    
+    window.alert("Remove Row");
+    $('tr#'+x.className).remove();
 }
 function aproveOferente(boton){
     updateEstadoOferente(boton,"APROVADO");
@@ -11,21 +12,24 @@ function aproveOferente(boton){
 function disaproveOferente(boton){
     updateEstadoOferente(boton,"DENEGADO");
 }
-function updateEstadoOferente(boton,estado){
-    alert(boton.id+"  "+estado);
-    data=new FormData();
-    data.append("objeto",JSON.stringify(obj));
+function updateEstadoOferente(boton,estado){    
+    var message = {oferenteid:boton.className,estado:estado};
+    var data=new FormData();
+    data.append("objeto",JSON.stringify(message));
     $.ajax({type: "POST", 
                   url:"cambiarEstadoOferente", 
                   data:data,
                   datatype:"json",
-                  processData: true,                  
+                  processData: false, 
+                  contentType: false,   
+                  async: true,
                   success: 
-                    function(object){
+                    function(x){                        
+                        window.alert(boton.className+" "+estado);
                         removeRow(boton);                       
                     },
-                  error: function(status){
-                         window.alert("Error al cambiar Estado");
+                  error: function(y){                        
+                         window.alert("Error al cambiar Estado de ");
                     }                    
                 }); 
 }
