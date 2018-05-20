@@ -6,6 +6,7 @@
 package Servlets;
 
 
+import BussinesLogic.MensajeEstado;
 import BussinessLogic.Administrador;
 import BussinessLogic.Nacionalidad;
 import com.google.gson.Gson;
@@ -27,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author edva5
  */
-@MultipartConfig @WebServlet(name = "Administradores", urlPatterns = {"/Administradores","/add"})
+@MultipartConfig @WebServlet(name = "Administradores", urlPatterns = {"/Administradores","/add","/cambiarEstadoOferente"})
 public class ControllerAdmin extends HttpServlet {
 
     /**
@@ -51,6 +52,9 @@ public class ControllerAdmin extends HttpServlet {
             }
          }
               break;
+           case "/cambiarEstadoOferente":
+               doUpdateEstadoOferente(request, response);
+               break;
           default:
               break;
       }           
@@ -76,6 +80,26 @@ public class ControllerAdmin extends HttpServlet {
         }
        
         
+    }
+    private void doUpdateEstadoOferente(HttpServletRequest request, HttpServletResponse response){                
+        try {
+        Reader reader = new BufferedReader(new InputStreamReader(request.getPart("objeto").getInputStream()));
+        Gson gson = new Gson();
+        MensajeEstado object = gson.fromJson(reader, MensajeEstado.class);
+        PrintWriter out;
+        out = response.getWriter();
+        response.setContentType("application/json; charset=UTF-8");
+        out.write(gson.toJson(object));    
+            if (Model.Model.getInstance().updateEstado(object.getOferenteid(), object.getEstado()))
+                response.setStatus(200); // ok with content
+            else
+                response.setStatus(401); 
+        } catch (IOException ex) {            
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ServletException ex) {
+            response.setStatus(401); 
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
