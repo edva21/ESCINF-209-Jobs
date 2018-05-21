@@ -55,6 +55,9 @@ public class ControllerAdmin extends HttpServlet {
            case "/cambiarEstadoOferente":
                doUpdateEstadoOferente(request, response);
                break;
+            case "/cambiarEstadoEmpresa":
+               doUpdateEstadoEmpresa(request, response);
+               break;
           default:
               break;
       }           
@@ -101,7 +104,26 @@ public class ControllerAdmin extends HttpServlet {
             Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    private void doUpdateEstadoEmpresa(HttpServletRequest request, HttpServletResponse response){                
+        try {
+        Reader reader = new BufferedReader(new InputStreamReader(request.getPart("objeto").getInputStream()));
+        Gson gson = new Gson();
+        MensajeEstado object = gson.fromJson(reader, MensajeEstado.class);
+        PrintWriter out;
+        out = response.getWriter();
+        response.setContentType("application/json; charset=UTF-8");
+        out.write(gson.toJson(object));    
+            if (Model.Model.getInstance().updateEstadoEmpresa(object.getOferenteid(), object.getEstado()))
+                response.setStatus(200); // ok with content
+            else
+                response.setStatus(401); 
+        } catch (IOException ex) {            
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ServletException ex) {
+            response.setStatus(401); 
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
