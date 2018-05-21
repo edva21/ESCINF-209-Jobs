@@ -41,7 +41,7 @@ private static OferenteDAO INSTANCE;
             a.setOferenteResidencia(rs.getString("OferenteResidencia"));
             a.setOferenteTelefono(rs.getString("OferenteTelefono"));
             a.setOferenteUserName(rs.getString("OferenteUserName"));
-            a.setOferenteNacionalidad(rs.getString("OferenteNacionalidad"));
+            a.setOferenteNacionalidad(rs.getString("Nacionalidad"));
             return a;
         } catch (SQLException ex) {
             Logger.getLogger(OferenteDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -133,5 +133,30 @@ private static OferenteDAO INSTANCE;
         }
          desconectar();
         return  resultado;
+    }
+    public boolean oferenteUpdate(Oferente a) throws Exception{
+       getConnection();
+        String sql="UPDATE Oferente SET OferenteCedula='%s',OferenteNombre='%s',OferenteApellido='%s',OferenteTelefono='%s',"
+                + "OferenteResidencia='%s',OferenteCurriculum='%x',OferenteEstadoDeCuenta='%s',OferenteUserName='%s',OferenteClave='%s',OferenteNacionalidad='%s' WHERE OferenteEmail='%s';";
+        sql=String.format(sql,a.getOferenteCedula(),a.getOferenteNombre(),a.getOferenteApellido(),
+        a.getOferenteTelefono(),a.getOferenteResidencia(),a.getOferenteCurriculum(),a.getOferenteEstadoDeCuenta(),a.getOferenteUserName(),
+        a.getOferenteClave(),a.getOferenteNacionalidad(),a.getOferenteEmail());
+        int count=executeUpdate(sql);
+        if (count==0){
+            return false;
+        }        
+        desconectar();
+        return true;
+    }
+    public boolean oferenteUpdateEstado(String id,String Estado) throws Exception{
+       getConnection();
+        String sql="UPDATE Oferente SET OferenteEstadoDeCuenta='%s' WHERE OferenteEmail='%s' AND OferenteEstadoDeCuenta='%s';";
+        sql=String.format(sql,Estado,id,"ESPERA");
+        int count=executeUpdate(sql);
+        if (count==0){
+            return false;
+        }        
+        desconectar();
+        return true;
     }
 }

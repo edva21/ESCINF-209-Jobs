@@ -317,7 +317,7 @@ public class Model {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
-    }
+    }    
     public boolean login(Empresa obj){
         try{
              Empresa empresa = DataAccess.EmpresaDAO.getInstance().empresaGet(obj.getEmpresaEmail()); 
@@ -326,5 +326,24 @@ public class Model {
         catch(Exception ex){
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
             return false;}         
+    }
+    public boolean update(Oferente o){
+        try{
+            DataAccess.OferenteDAO.getInstance().oferenteUpdate(o);
+            return true;
+        }
+        catch(Exception ex){
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            return false;       
+        }
+    }
+    public boolean updateEstado(String oferenteEmail,String Estado){
+        try{            
+            return DataAccess.OferenteDAO.getInstance().oferenteUpdateEstado(oferenteEmail, Estado);            
+        }
+        catch(Exception ex){
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            return false;       
+        }
     }
 }

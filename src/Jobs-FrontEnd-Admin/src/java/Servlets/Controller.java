@@ -5,8 +5,10 @@
  */
 package Servlets;
 
+import BussinessLogic.Oferente;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author edva5
  */
-@WebServlet(name = "Navigator", urlPatterns = {"/Navigator","/adminMngmnt"})
+@WebServlet(name = "Navigator", urlPatterns = {"/Navigator","/adminMngmnt","/adminOferente"})
 public class Controller extends HttpServlet {
 
     /**
@@ -36,6 +38,11 @@ public class Controller extends HttpServlet {
             request.setAttribute("administradores",Model.Model.getInstance().readAllAdministrador());
             request.getRequestDispatcher("adminMngmnt.jsp").forward(request, response);
         }
+        else if(request.getServletPath().equals("/adminOferente")){
+            List<Oferente> l =Model.Model.getInstance().readAllOferenteEnEspera();
+            request.setAttribute("oferentes",l);
+            request.getRequestDispatcher("adminOferente.jsp").forward(request, response);
+        }                
         /*try (PrintWriter out = response.getWriter()) {
             
             out.println("<!DOCTYPE html>");
