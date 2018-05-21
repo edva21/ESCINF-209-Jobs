@@ -33,7 +33,7 @@
        <td><a href="#<%=x%>modal">+</a></td>
        <td class="email"><%=o.getEmpresaEmail()%></td>
        <td class="nombre"><%=o.getEmpresaNombre()%></td>
-       <td class="apellido"><%=o.getEmpresaTelefono()%></td>       
+       <td class="telefono"><%=o.getEmpresaTelefono()%></td>       
        <td> <button type="button"  class="<%=x%>" onclick="aproveEmpresa(this)">Aceptar</button> </td>
        <td> <button type="button"  class="<%=x%>" onclick="disaproveEmpresa(this)">Denegar</button> </td>
    </tr>        

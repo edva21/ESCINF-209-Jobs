@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author edva5
  */
-@MultipartConfig @WebServlet(name = "Administradores", urlPatterns = {"/Administradores","/add","/cambiarEstadoOferente"})
+@MultipartConfig @WebServlet(name = "Administradores", urlPatterns = {"/Administradores","/add","/cambiarEstadoOferente","/cambiarEstadoEmpresa"})
 public class ControllerAdmin extends HttpServlet {
 
     /**
