@@ -42,7 +42,7 @@ function add(habilidad){
     if(answer!==false){
                     var parent_hability=null;
                     if(stack.length>1){
-                        parent_hability='{'+stack[stack.length-1]+'}';
+                        parent_hability=stack[stack.length-1];
                     }
                     var message = {habilidadNombre:habilidad,habilidadHabilidadNombre:parent_hability};
                     var data=new FormData();
