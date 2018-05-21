@@ -205,6 +205,22 @@ public class Model {
             return new ArrayList();
         }
     }
+    public List<Habilidad> readAllHabilidadRoots(){
+        try {
+            return DataAccess.HabilidadDAO.getInstance().HabilidadRoots();            
+        } catch (Exception ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            return new ArrayList();
+        }
+    }
+    public List<Habilidad> readAllHabilidadHijos(Habilidad padre){
+        try {
+            return DataAccess.HabilidadDAO.getInstance().HabilidadHijos(padre);            
+        } catch (Exception ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            return new ArrayList();
+        }
+    }
     public List<Nacionalidad> readAllNacionalidad(){
         try {
             return DataAccess.NacionalidadDAO.getInstance().nacionalidadListar();            
@@ -348,6 +364,15 @@ public class Model {
     public boolean updateEstado(String oferenteEmail,String Estado){
         try{            
             return DataAccess.OferenteDAO.getInstance().oferenteUpdateEstado(oferenteEmail, Estado);            
+        }
+        catch(Exception ex){
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            return false;       
+        }
+    }
+    public boolean updateEstadoEmpresa(String oferenteEmail,String Estado){
+        try{            
+            return DataAccess.EmpresaDAO.getInstance().empresaUpdateEstado(oferenteEmail, Estado);
         }
         catch(Exception ex){
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);

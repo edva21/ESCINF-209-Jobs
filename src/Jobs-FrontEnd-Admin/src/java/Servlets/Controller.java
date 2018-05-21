@@ -20,7 +20,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author edva5
  */
+<<<<<<< HEAD
 @WebServlet(name = "Navigator", urlPatterns = {"/Navigator","/adminMngmnt","/adminOferente","/adminEmpresa"})
+=======
+@WebServlet(name = "Navigator", urlPatterns = {"/adminHabilidad","/Navigator","/adminMngmnt","/adminOferente","/adminEmpresa"})
+>>>>>>> Eddy-2
 public class Controller extends HttpServlet {
 
     /**
@@ -49,6 +53,13 @@ public class Controller extends HttpServlet {
             request.setAttribute("empresas",l);
             request.getRequestDispatcher("adminEmpresa.jsp").forward(request, response);
         }
+<<<<<<< HEAD
+=======
+        else if(request.getServletPath().equals("/adminHabilidad")){            
+            request.setAttribute("habilidades",Model.Model.getInstance().readAllHabilidadRoots());
+            request.getRequestDispatcher("adminHabilidad.jsp").forward(request, response);
+        }
+>>>>>>> Eddy-2
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
