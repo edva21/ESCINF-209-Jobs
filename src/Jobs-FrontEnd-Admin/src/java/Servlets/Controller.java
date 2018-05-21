@@ -5,6 +5,7 @@
  */
 package Servlets;
 
+import BussinessLogic.Empresa;
 import BussinessLogic.Oferente;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author edva5
  */
-@WebServlet(name = "Navigator", urlPatterns = {"/Navigator","/adminMngmnt","/adminOferente"})
+@WebServlet(name = "Navigator", urlPatterns = {"/Navigator","/adminMngmnt","/adminOferente","/adminEmpresa"})
 public class Controller extends HttpServlet {
 
     /**
@@ -42,19 +43,12 @@ public class Controller extends HttpServlet {
             List<Oferente> l =Model.Model.getInstance().readAllOferenteEnEspera();
             request.setAttribute("oferentes",l);
             request.getRequestDispatcher("adminOferente.jsp").forward(request, response);
-        }                
-        /*try (PrintWriter out = response.getWriter()) {
-            
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Navigator</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Navigator at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }*/
+        }  
+        else if(request.getServletPath().equals("/adminEmpresa")){
+            List<Empresa> l =Model.Model.getInstance().readAllEmpresaEnEspera();
+            request.setAttribute("empresas",l);
+            request.getRequestDispatcher("adminEmpresa.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
