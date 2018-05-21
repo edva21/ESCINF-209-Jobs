@@ -115,5 +115,20 @@ private static EmpresaDAO INSTANCE;
         }
          desconectar();
     }
+    public List<Empresa> empresaEnEsperaListar(){
+         getConnection();
+        List<Empresa> resultado=new ArrayList<>();
+        try {
+            String sql="select * from Empresa WHERE empresaEstadoDeCuenta='ESPERA'";
+            ResultSet rs =  executeQuery(sql);
+            while (rs.next()) {
+                resultado.add(empresa(rs));
+            }        
+        } catch (SQLException ex) {
+            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         desconectar();
+        return  resultado;
+    }
    
 }
