@@ -12,18 +12,14 @@ import java.util.logging.Logger;
  * @author fabio
  */
 public class Habilidad {    
-    private String habilidadNombre;    
-    //private ArrayList<OferenteHasHabilidad> oferenteHasHabilidadCollection;    
-    //private ArrayList<PuestoHabilidad> puestoHabilidadCollection;   
-   //private ArrayList<Habilidad> habilidadCollection;    
-    private Habilidad habilidadHabilidadNombre;
+    private String habilidadNombre;        
+    private String habilidadHabilidadNombre;
 
     public Habilidad() {
     }
 
     public Habilidad(String habilidadNombre, Habilidad habilidadHabilidadNombre) {
-        this.habilidadNombre = habilidadNombre;
-        this.habilidadHabilidadNombre = habilidadHabilidadNombre;
+        this.habilidadNombre = habilidadNombre;        
     }
     
     /**
@@ -43,16 +39,14 @@ public class Habilidad {
     /**
      * @return the habilidadHabilidadNombre
      */
-    public Habilidad getHabilidadHabilidadNombre() {
+    public String getHabilidadHabilidadNombre() {
         return habilidadHabilidadNombre;
     }
 
     /**
      * @param habilidadHabilidadNombre the habilidadHabilidadNombre to set
      */
-    public void setHabilidadHabilidadNombre(Habilidad habilidadHabilidadNombre) {
+    public void setHabilidadHabilidadNombre(String habilidadHabilidadNombre) {
         this.habilidadHabilidadNombre = habilidadHabilidadNombre;
-    }
-  
-    
+    }    
 }

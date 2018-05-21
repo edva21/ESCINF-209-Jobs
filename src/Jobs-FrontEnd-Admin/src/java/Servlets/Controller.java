@@ -50,6 +50,7 @@ public class Controller extends HttpServlet {
             request.getRequestDispatcher("adminEmpresa.jsp").forward(request, response);
         }
         else if(request.getServletPath().equals("/adminHabilidad")){            
+            request.setAttribute("habilidades",Model.Model.getInstance().readAllHabilidadRoots());
             request.getRequestDispatcher("adminHabilidad.jsp").forward(request, response);
         }
     }

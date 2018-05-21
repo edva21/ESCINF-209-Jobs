@@ -36,7 +36,7 @@ private static HabilidadDAO INSTANCE;
             Habilidad a = new Habilidad();
             a.setHabilidadNombre(rs.getString("HabilidadNombre"));
             if(rs.getString("Habilidad_HabilidadNombre")!=null){
-                 a.setHabilidadHabilidadNombre(habilidadGet(rs.getString("Habilidad_HabilidadNombre")));
+                 a.setHabilidadHabilidadNombre(rs.getString("Habilidad_HabilidadNombre"));
             }else {a.setHabilidadHabilidadNombre(null);}
              
             return a;
@@ -146,7 +146,7 @@ private static HabilidadDAO INSTANCE;
        }
        else{
          sql="INSERT INTO Habilidad (HabilidadNombre,Habilidad_HabilidadNombre) VALUES('%s','%s')";
-        sql=String.format(sql,a.getHabilidadNombre(),a.getHabilidadHabilidadNombre().getHabilidadNombre());
+        sql=String.format(sql,a.getHabilidadNombre(),a.getHabilidadHabilidadNombre());
        }
         int count=executeUpdate(sql);
         if (count==0){

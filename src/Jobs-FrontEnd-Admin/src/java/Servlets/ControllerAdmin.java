@@ -11,6 +11,7 @@ import BussinessLogic.Administrador;
 import BussinessLogic.Habilidad;
 import BussinessLogic.Nacionalidad;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -29,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author edva5
  */
-@MultipartConfig @WebServlet(name = "Administradores", urlPatterns = {"addHabilidad","/Administradores","/add","/cambiarEstadoOferente","/cambiarEstadoEmpresa"})
+@MultipartConfig @WebServlet(name = "Administradores", urlPatterns = {"/addHabilidad","/Administradores","/add","/cambiarEstadoOferente","/cambiarEstadoEmpresa"})
 public class ControllerAdmin extends HttpServlet {
 
     /**
@@ -167,9 +168,9 @@ public class ControllerAdmin extends HttpServlet {
         return "Short description";
     }// </editor-fold>
     private void doAddHabilidad(HttpServletRequest request, HttpServletResponse response){                
-        try {
-        Reader reader = new BufferedReader(new InputStreamReader(request.getPart("objeto").getInputStream()));
         Gson gson = new Gson();
+        try {
+        Reader reader = new BufferedReader(new InputStreamReader(request.getPart("objeto").getInputStream()));        
         Habilidad object = gson.fromJson(reader, Habilidad.class);
         PrintWriter out;
         out = response.getWriter();
@@ -180,8 +181,17 @@ public class ControllerAdmin extends HttpServlet {
             else
                 response.setStatus(401); 
         } catch (IOException ex) {            
+            response.setStatus(401);             
             Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ServletException ex) {
+            response.setStatus(401); 
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch(JsonSyntaxException ex){
+            response.setStatus(401); 
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch(Exception ex){
             response.setStatus(401); 
             Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }

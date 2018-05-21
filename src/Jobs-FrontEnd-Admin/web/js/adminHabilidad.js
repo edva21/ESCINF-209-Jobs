@@ -30,22 +30,19 @@ function printpath(){
 }
 function goto(li){
     for (i = stack.length-1; i > 0; i--) {
-        if(li.id===stack[i]){
-            i=0;
-        }
-        else
-        {
-            stack.pop();
-        }
+        if(li.id===stack[i])
+            i=0;        
+        else        
+            stack.pop();        
     } 
     printpath();    
 }
 function add(habilidad){    
-    var answer = confirm("Desea poner estado de la cuenta"+$("#"+boton.className+" .email").text()+" como "+estado);
+    var answer = confirm("Desea agregar la habilidad:"+habilidad);
     if(answer!==false){
                     var parent_hability=null;
                     if(stack.length>1){
-                        parent_hability=stack[stack.length-1];
+                        parent_hability='{'+stack[stack.length-1]+'}';
                     }
                     var message = {habilidadNombre:habilidad,habilidadHabilidadNombre:parent_hability};
                     var data=new FormData();
@@ -61,8 +58,8 @@ function add(habilidad){
                                     function(x){                        
                                         addToList();                                                               
                                     },
-                                    error: function(y){                        
-                                            window.alert("Error al agregar Habilidad");
+                                    error: function(xhr, ajaxOptions, thrownError){                        
+                                            window.alert("Error al agregar Habilidad: "+xhr.status+" "+ajaxOptions);
                                     }                    
                             }); 
                 }
