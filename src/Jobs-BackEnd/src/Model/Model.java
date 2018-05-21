@@ -354,4 +354,13 @@ public class Model {
             return false;       
         }
     }
+    public boolean updateEstadoEmpresa(String oferenteEmail,String Estado){
+        try{            
+            return DataAccess.EmpresaDAO.getInstance().empresaUpdateEstado(oferenteEmail, Estado);
+        }
+        catch(Exception ex){
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            return false;       
+        }
+    }
 }
