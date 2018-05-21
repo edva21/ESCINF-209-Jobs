@@ -189,6 +189,14 @@ public class Model {
             return new ArrayList();
         }
     }
+    public List<Empresa> readAllEmpresaEnEspera(){
+        try {
+            return DataAccess.EmpresaDAO.getInstance().empresaEnEsperaListar();            
+        } catch (Exception ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            return new ArrayList();
+        }
+    }
     public List<Habilidad> readAllHabilidad(){
         try {
             return DataAccess.HabilidadDAO.getInstance().HabilidadListar();            
