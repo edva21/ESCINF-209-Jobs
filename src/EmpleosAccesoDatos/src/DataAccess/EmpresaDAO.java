@@ -35,10 +35,7 @@ private static EmpresaDAO INSTANCE;
             a.setEmpresaDescripcion(rs.getString("EmpresaDescripcion"));
             a.setEmpresaEmail(rs.getString("EmpresaEmail"));
             a.setEmpresaEstadoDeCuenta(rs.getString("EmpresaEstadoDeCuenta"));
-<<<<<<< HEAD
-=======
             a.setEmpresaLocalizacion(rs.getString("EmpresaLocalizacion"));
->>>>>>> Eddy-2
             a.setEmpresaLatitud(rs.getDouble("EmpresaLongitud"));
             a.setEmpresaLongitud(rs.getDouble("EmpresaLatitud"));
             a.setEmpresaNombre(rs.getString("EmpresaNombre"));
@@ -134,8 +131,7 @@ private static EmpresaDAO INSTANCE;
          desconectar();
         return  resultado;
     }
-<<<<<<< HEAD
-=======
+
     public boolean empresaUpdateEstado(String id,String Estado) throws Exception{
        getConnection();
         String sql="UPDATE Empresa SET EmpresaEstadoDeCuenta='%s' WHERE EmpresaEmail='%s' AND EmpresaEstadoDeCuenta='%s';";
@@ -147,6 +143,5 @@ private static EmpresaDAO INSTANCE;
         desconectar();
         return true;
     }
->>>>>>> Eddy-2
    
 }
