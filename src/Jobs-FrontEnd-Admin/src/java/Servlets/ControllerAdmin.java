@@ -8,6 +8,7 @@ package Servlets;
 
 import FEBussinesLogic.MensajeEstado;
 import BussinessLogic.Administrador;
+import BussinessLogic.Habilidad;
 import BussinessLogic.Nacionalidad;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
@@ -28,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author edva5
  */
-@MultipartConfig @WebServlet(name = "Administradores", urlPatterns = {"/Administradores","/add","/cambiarEstadoOferente","/cambiarEstadoEmpresa"})
+@MultipartConfig @WebServlet(name = "Administradores", urlPatterns = {"addHabilidad","/Administradores","/add","/cambiarEstadoOferente","/cambiarEstadoEmpresa"})
 public class ControllerAdmin extends HttpServlet {
 
     /**
@@ -57,6 +58,9 @@ public class ControllerAdmin extends HttpServlet {
                break;
             case "/cambiarEstadoEmpresa":
                doUpdateEstadoEmpresa(request, response);
+               break;
+            case "/addHabilidad":
+               doAddHabilidad(request, response);
                break;
           default:
               break;
@@ -162,5 +166,24 @@ public class ControllerAdmin extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    private void doAddHabilidad(HttpServletRequest request, HttpServletResponse response){                
+        try {
+        Reader reader = new BufferedReader(new InputStreamReader(request.getPart("objeto").getInputStream()));
+        Gson gson = new Gson();
+        Habilidad object = gson.fromJson(reader, Habilidad.class);
+        PrintWriter out;
+        out = response.getWriter();
+        response.setContentType("application/json; charset=UTF-8");
+        out.write(gson.toJson(object));    
+            if (Model.Model.getInstance().create(object))
+                response.setStatus(200); // ok with content
+            else
+                response.setStatus(401); 
+        } catch (IOException ex) {            
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ServletException ex) {
+            response.setStatus(401); 
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
