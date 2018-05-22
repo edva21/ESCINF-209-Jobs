@@ -213,7 +213,7 @@ public class Model {
             return new ArrayList();
         }
     }
-    public List<Habilidad> readAllHabilidadHijos(Habilidad padre){
+    public List<Habilidad> readAllHabilidadHijos(String padre){
         try {
             return DataAccess.HabilidadDAO.getInstance().HabilidadHijos(padre);            
         } catch (Exception ex) {

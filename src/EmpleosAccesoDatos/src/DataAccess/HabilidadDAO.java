@@ -121,11 +121,11 @@ private static HabilidadDAO INSTANCE;
          desconectar();
         return  resultado;
     }
-    public List<Habilidad> HabilidadHijos(Habilidad padre) throws Exception{
+    public List<Habilidad> HabilidadHijos(String padre) throws Exception{
          getConnection();
         List<Habilidad> resultado=new ArrayList<>();
         try {
-            String sql="select * from Habilidad where Habilidad_HabilidadNombre =\""+padre.getHabilidadNombre()+"\"";
+            String sql="select * from Habilidad where Habilidad_HabilidadNombre =\""+padre+"\"";
             ResultSet rs =  executeQuery(sql);
             while (rs.next()) {
                 resultado.add(habilidad(rs));

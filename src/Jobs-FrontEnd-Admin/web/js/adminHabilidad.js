@@ -64,3 +64,20 @@ function add(habilidad){
                             }); 
                 }
 }
+function getsons(habilidad){    
+    var answer = confirm("Desea agregar la habilidad:"+habilidad);
+    if(answer!==false){
+                    var parent_hability=null;
+                    if(stack.length>1){
+                        parent_hability=stack[stack.length-1];
+                    }
+                    var message = {habilidadNombre:habilidad,habilidadHabilidadNombre:parent_hability};
+                    var data=new FormData();
+                    data.append("objeto",JSON.stringify(message));
+                    $.get("sonsHabilidad",data,function(response){
+                       printsons(response); 
+                    },"application/json");           
+                }
+}
+
+
