@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author edva5
  */
-@MultipartConfig @WebServlet(name = "Administradores", urlPatterns = {"/sonsHabilidad","/addHabilidad","/Administradores","/add","/cambiarEstadoOferente","/cambiarEstadoEmpresa"})
+@MultipartConfig @WebServlet(name = "Administradores", urlPatterns = {"/sendHabilidades","/sendHabilidad","/sonsHabilidad","/addHabilidad","/Administradores","/add","/cambiarEstadoOferente","/cambiarEstadoEmpresa"})
 public class ControllerAdmin extends HttpServlet {
 
     /**
@@ -63,13 +63,22 @@ public class ControllerAdmin extends HttpServlet {
                break;
             case "/addHabilidad":
                doAddHabilidad(request, response);
+               break;               
+            case "/sendHabilidad":
+               doSendHabilidad(request, response);
                break;
+            case "/sendHabilidades":
+               doSendHabilidades(request, response);
+               break;
+            case "/sonsHabilidad":
+                doSendSons(request, response);
+                break;
           default:
               break;
       }           
     }
     private void doAdd(HttpServletRequest request, HttpServletResponse response){                
-        
+       
         try {
         Reader personaReader = new BufferedReader(new InputStreamReader(request.getPart("objeto").getInputStream()));
         Gson gson = new Gson();
@@ -197,16 +206,18 @@ public class ControllerAdmin extends HttpServlet {
             Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void doSendSons(HttpServletRequest request, HttpServletResponse response){                
-
-        
+    private void doSendSons(HttpServletRequest request, HttpServletResponse response){                        
         try {
         Gson gson = new Gson();
-        Reader reader = new BufferedReader(new InputStreamReader(request.getPart("objeto").getInputStream()));        
+        Reader reader = request.getReader();
         Habilidad object = gson.fromJson(reader, Habilidad.class);
-        List<Habilidad> list=Model.Model.getInstance().readAllHabilidadHijos(object.getHabilidadNombre());        
+         List<Habilidad> l;
+        if(object.getHabilidadNombre().equals("Inicio"))
+            l=Model.Model.getInstance().readAllHabilidadRoots();
+        else
+            l=Model.Model.getInstance().readAllHabilidadHijos(object.getHabilidadNombre()); 
         PrintWriter out;
-        String json =gson.toJson(list);
+        String json =gson.toJson(l);
         out = response.getWriter();
         response.setContentType("application/json; charset=UTF-8");
         out.write(json);                
@@ -214,10 +225,80 @@ public class ControllerAdmin extends HttpServlet {
         } catch (IOException ex) {            
             response.setStatus(401);             
             Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ServletException ex) {
+        }
+        catch(JsonSyntaxException ex){
             response.setStatus(401); 
             Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
+        catch(Exception ex){
+            response.setStatus(401); 
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void doSendHabilidad(HttpServletRequest request, HttpServletResponse response){                        
+        Gson gson = new Gson();
+        try {
+        Reader reader = request.getReader();
+        Habilidad object = gson.fromJson(reader, Habilidad.class);
+        PrintWriter out;
+        object = Model.Model.getInstance().readHabilidad(object.getHabilidadNombre());        
+        out = response.getWriter();
+        response.setContentType("application/json; charset=UTF-8");
+        out.write(gson.toJson(object));    
+        response.setStatus(200); // ok with content
+        } catch (IOException ex) {            
+            response.setStatus(401);             
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch(JsonSyntaxException ex){
+            response.setStatus(401); 
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch(Exception ex){
+            response.setStatus(401); 
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void doSendSonsOfHabilidad(HttpServletRequest request, HttpServletResponse response){                        
+        try {
+        Gson gson = new Gson();
+        BufferedReader reader = request.getReader();
+        Habilidad object = gson.fromJson(reader, Habilidad.class);              
+        PrintWriter out;
+         List<Habilidad> l;
+        if(object.getHabilidadNombre().equals("Inicio"))
+            l=Model.Model.getInstance().readAllHabilidadRoots();
+        else
+            l=Model.Model.getInstance().readAllHabilidadHijos(object.getHabilidadNombre()); 
+        String json =gson.toJson(l);
+        out = response.getWriter();
+        response.setContentType("application/json; charset=UTF-8");
+        out.write(json);                
+                response.setStatus(200); // ok with content           
+        } catch (IOException ex) {            
+            response.setStatus(401);             
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch(JsonSyntaxException ex){
+            response.setStatus(400); 
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch(Exception ex){
+            response.setStatus(401); 
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void doSendHabilidades(HttpServletRequest request, HttpServletResponse response){                        
+        try {
+        Gson gson = new Gson();        
+        List<Habilidad> l=Model.Model.getInstance().readAllHabilidad();
+        PrintWriter out;
+        String json =gson.toJson(l);
+        out = response.getWriter();
+        response.setContentType("application/json; charset=UTF-8");
+        out.write(json);                
+                response.setStatus(200); // ok with content           
+        } 
         catch(JsonSyntaxException ex){
             response.setStatus(401); 
             Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);

@@ -83,10 +83,9 @@ CREATE TABLE IF NOT EXISTS `empleosdb`.`Habilidad` (
   CONSTRAINT `fk_Habilidad_Habilidad1`
     FOREIGN KEY (`Habilidad_HabilidadNombre`)
     REFERENCES `empleosdb`.`Habilidad` (`HabilidadNombre`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `empleosdb`.`Administrador`
@@ -117,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `empleosdb`.`Puesto` (
   CONSTRAINT `fk_Puesto_Empresa1`
     FOREIGN KEY (`Empresa_EmpresaEmail`)
     REFERENCES `empleosdb`.`Empresa` (`EmpresaEmail`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -162,12 +161,12 @@ CREATE TABLE IF NOT EXISTS `empleosdb`.`Puesto_Habilidad` (
   CONSTRAINT `fk_Puesto_has_Habilidad_Puesto1`
     FOREIGN KEY (`Puesto_idPuesto` , `Puesto_Empresa_EmpresaEmail`)
     REFERENCES `empleosdb`.`Puesto` (`idPuesto` , `Empresa_EmpresaEmail`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Puesto_has_Habilidad_Habilidad1`
     FOREIGN KEY (`Habilidad_HabilidadNombre`)
     REFERENCES `empleosdb`.`Habilidad` (`HabilidadNombre`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -187,12 +186,12 @@ CREATE TABLE IF NOT EXISTS `empleosdb`.`Oferente_has_Habilidad` (
   CONSTRAINT `fk_Oferente_has_Habilidad_Oferente1`
     FOREIGN KEY (`Oferente_OferenteEmail`)
     REFERENCES `empleosdb`.`Oferente` (`OferenteEmail`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Oferente_has_Habilidad_Habilidad1`
     FOREIGN KEY (`Habilidad_HabilidadNombre`)
     REFERENCES `empleosdb`.`Habilidad` (`HabilidadNombre`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -340,3 +339,5 @@ INSERT INTO empleosdb.Nacionalidad (`NacionalidadNombre`)
 	VALUES ('Venezolana');
 INSERT INTO empleosdb.Nacionalidad (`NacionalidadNombre`)
 	VALUES ('Vietnamita');
+
+alter table `empleosdb`.`Habilidad`  add column `HabilidadEsHoja` bool;

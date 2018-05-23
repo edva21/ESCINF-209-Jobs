@@ -54,8 +54,8 @@ public class Model {
         }
     }
     public boolean create(Habilidad obj){
-        try {
-            DataAccess.HabilidadDAO.getInstance().habilidadIngresar(obj);
+        try {            
+                DataAccess.HabilidadDAO.getInstance().habilidadIngresar(obj);
             return true;
         } catch (Exception ex) {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);

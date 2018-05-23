@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class Habilidad {    
     private String habilidadNombre;        
     private String habilidadHabilidadNombre;
-
+    private boolean habilidadEsHoja;
     public Habilidad() {
     }
 
@@ -28,6 +28,20 @@ public class Habilidad {
     public String getHabilidadNombre() {
         return habilidadNombre;
     }
+    /**
+     * @return the habilidadEsHoja
+     */
+    public boolean isHabilidadEsHoja() {
+        return habilidadEsHoja;
+    }
+
+    /**
+     * @param habilidadEsHoja the habilidadEsHoja to set
+     */
+    public void setHabilidadEsHoja(boolean habilidadEsHoja) {
+        this.habilidadEsHoja = habilidadEsHoja;
+    }
+   
 
     /**
      * @param habilidadNombre the habilidadNombre to set

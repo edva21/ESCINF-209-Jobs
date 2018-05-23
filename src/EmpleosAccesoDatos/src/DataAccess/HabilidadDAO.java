@@ -35,6 +35,7 @@ private static HabilidadDAO INSTANCE;
         try {
             Habilidad a = new Habilidad();
             a.setHabilidadNombre(rs.getString("HabilidadNombre"));
+            a.setHabilidadEsHoja(rs.getBoolean("HabilidadEsHoja"));
             if(rs.getString("Habilidad_HabilidadNombre")!=null){
                  a.setHabilidadHabilidadNombre(rs.getString("Habilidad_HabilidadNombre"));
             }else {a.setHabilidadHabilidadNombre(null);}
@@ -137,22 +138,30 @@ private static HabilidadDAO INSTANCE;
         return  resultado;
     }
     public void habilidadIngresar(Habilidad a) throws Exception{
+        Habilidad padre= new Habilidad();
+        if(a.getHabilidadHabilidadNombre()!=null){
+            padre=habilidadGet(a.getHabilidadHabilidadNombre());
+        }
        getConnection();
-        String sql;
+        String sql="";        
        if(a.getHabilidadHabilidadNombre()==null){
-             sql="INSERT INTO Habilidad (HabilidadNombre) VALUES('%s')";
+             sql="INSERT INTO Habilidad (HabilidadNombre,HabilidadEsHoja) VALUES('%s',"+a.isHabilidadEsHoja()+")";
             sql=String.format(sql,a.getHabilidadNombre());
        
        }
        else{
-         sql="INSERT INTO Habilidad (HabilidadNombre,Habilidad_HabilidadNombre) VALUES('%s','%s')";
+           if(!padre.isHabilidadEsHoja()){
+        sql="INSERT INTO Habilidad (HabilidadNombre,Habilidad_HabilidadNombre,HabilidadEsHoja) VALUES('%s','%s',"+a.isHabilidadEsHoja()+')';
         sql=String.format(sql,a.getHabilidadNombre(),a.getHabilidadHabilidadNombre());
+        
+        
+           }        
        }
-        int count=executeUpdate(sql);
-        if (count==0){
+       int count=executeUpdate(sql);
+       if (count==0){
             throw new Exception("Habilidad no se pudo ingresar");
         }
-        desconectar();
+        desconectar(); 
     }
     public void habilidadBorrar(Habilidad a) throws Exception{
          getConnection();
