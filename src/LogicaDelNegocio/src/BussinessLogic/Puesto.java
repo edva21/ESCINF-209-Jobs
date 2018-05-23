@@ -7,6 +7,7 @@ package BussinessLogic;
 
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,7 +24,7 @@ public class Puesto {
     private double puestoSalario;
     private Boolean puestoActivo;    
     private Empresa empresa;
-
+    private LocalDate puestoFecha;
     public Puesto() {
     }
 
@@ -34,6 +35,22 @@ public class Puesto {
         this.puestoActivo = puestoActivo;
         this.empresa = empresa;
     }
+    /**
+     * @return the puestoFecha
+     */
+    public LocalDate getPuestoFecha() {
+        return puestoFecha;
+    }
+
+    /**
+     * @param puestoFecha the puestoFecha to set
+     */
+    public void setPuestoFecha(LocalDate puestoFecha) {
+        this.puestoFecha = puestoFecha;
+    }
+    
+
+    
     /**
      * @return the puestoPK
      */

@@ -19,10 +19,13 @@
         <jsp:useBean id="habilidades" scope="request" type="List<BussinessLogic.Habilidad>" class="java.util.ArrayList" />   
         <ul id="path"></ul>
         <ul id="habilidadList">
-            <li><input id="newhabilidad" onkeydown="javascript:addHabilidad(event)" type="text" name="habilidad" value="" ></li>            
+            <li><input id="newhabilidad" onkeydown="javascript:addHabilidad(event)" type="text" name="habilidad" value="" >Es Hoja:<input id="mycheckBox" onclick="javascrip:checkleaf()" type="checkbox"></li>            
             <%int x = 0;for(BussinessLogic.Habilidad h : habilidades){ %> 
-            <li class="item" onclick="javascript:navHabilidad(this)"><%=h.getHabilidadNombre()%></li>
-            <%x++;};%>
+            <%if(!h.isHabilidadEsHoja()){%>
+            <li id="<%=h.getHabilidadNombre()%>" class="item" onclick="javascript:navHabilidad(this)"><%=h.getHabilidadNombre()%></li>
+            <%}else{%>
+            <li id="<%=h.getHabilidadNombre()%>" class="item" onclick="javascript:navHabilidad(this)"><font color="red"><%=h.getHabilidadNombre()%></font></li>
+            <%}}%>                        
         </ul>  
     </body>
 </html>

@@ -11,3 +11,9 @@ and open the template in the editor.
 ul#path li {
     display:inline;
 }
+.item{
+    color: blue;
+}
+li:hover a {
+    color: blue;
+}
