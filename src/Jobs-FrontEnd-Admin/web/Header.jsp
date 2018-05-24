@@ -27,6 +27,7 @@
             <div class="menus">
             <ul class="menu">
                 <li><a href="OfferentLogin.jsp">ACCESO OFERENTE </a></li>
+                <li><a href="OfferentRegistro.jsp">REGISTRO OFERENTE </a></li>
                 <li><a href="EmpresaLogin.jsp">ACCESO EMPRESA </a></li>
                 <li><a href="EmpresaLogin.jsp">ACCESO ALMINISTRADOR </a></li>
             </ul>      
