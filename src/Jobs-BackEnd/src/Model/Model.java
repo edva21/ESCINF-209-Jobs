@@ -327,4 +327,15 @@ public class Model {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
             return false;}         
     }
+    
+    public boolean login(Oferente obj){
+        try{
+             Oferente oferente = DataAccess.OferenteDAO.getInstance().oferenteGet(obj.getOferenteEmail()); 
+            return oferente!= null && obj.getOferenteClave().equals(oferente.getOferenteClave());
+        }
+        catch(Exception ex){
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }         
+    }
 }
