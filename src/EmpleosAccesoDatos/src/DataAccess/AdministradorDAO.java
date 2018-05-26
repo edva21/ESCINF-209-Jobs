@@ -92,8 +92,9 @@ private static AdministradorDAO INSTANCE;
         sql = String.format(sql,AdministradorUserName);
         ResultSet rs =  executeQuery(sql);
         if (rs.next()) { 
+            Administrador a=administrador(rs);
             super.desconectar();
-            return administrador(rs);            
+            return a;            
         }
         else{
             throw new Exception ("Administrador no Existe");

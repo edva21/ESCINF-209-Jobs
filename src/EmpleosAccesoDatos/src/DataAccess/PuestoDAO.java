@@ -11,6 +11,7 @@ import BussinessLogic.Puesto;
 import BussinessLogic.PuestoPK;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -41,6 +42,8 @@ public class PuestoDAO extends DAO{
             a.setPuestoActivo(rs.getBoolean("PuestoActivo"));
             a.setPuestoDescripcion(rs.getString("PuestoDescripcion"));
             a.setPuestoSalario(rs.getDouble("PuestoSalario"));
+            if(rs.getDate("PuestoFecha")!=null)
+                a.setPuestoFecha(rs.getDate("PuestoFecha").toLocalDate());
             return a;
         } catch (SQLException ex) {
             Logger.getLogger(PuestoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -110,10 +113,26 @@ public class PuestoDAO extends DAO{
          desconectar();
         return  resultado;
     }
+    public List<Puesto> puestoListar(LocalDate d) throws Exception{
+         getConnection();
+        List<Puesto> resultado=new ArrayList<>();
+        try {
+            String sql="select * from Puesto WHERE MONTH(PuestoFecha) LIKE MONTH("+java.sql.Date.valueOf(d)+")"
+                    +"AND YEAR(PuestoFecha) LIKE YEAR("+java.sql.Date.valueOf(d)+")";
+            ResultSet rs =  executeQuery(sql);
+            while (rs.next()) {
+                resultado.add(puesto(rs));
+            }        
+        } catch (SQLException ex) {
+            Logger.getLogger(PuestoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         desconectar();
+        return  resultado;
+    }
    
     public void puestoIngresar(Puesto a) throws Exception{
        getConnection();
-        String sql="INSERT INTO Puesto (PuestoNombre,PuestoDescripcion,PuestoSalario,PuestoActivo,Empresa_EmpresaEmail) VALUES('%s','%s','%d','%b','%s')";
+        String sql="INSERT INTO Puesto (PuestoNombre,PuestoDescripcion,PuestoSalario,PuestoActivo,Empresa_EmpresaEmail,PuestoFecha) VALUES('%s','%s','%d','%b','%s',"+java.sql.Date.valueOf(a.getPuestoFecha())+")";
         sql=String.format(sql,a.getPuestoNombre(),a.getPuestoDescripcion(),a.getPuestoSalario(),a.getPuestoActivo(),a.getEmpresa().getEmpresaEmail());
         int count=executeUpdate(sql);
         if (count==0){

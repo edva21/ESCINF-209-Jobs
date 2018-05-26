@@ -6,6 +6,7 @@
 package DataAccess;
 
 
+import BussinessLogic.Administrador;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import BussinessLogic.Empresa;
@@ -15,10 +16,12 @@ import BussinessLogic.Empresa;
  * @author gaspa
  */
 public class main {
-    public static void main(String[] args) throws URISyntaxException, IOException, Exception {
-        Empresa x = new Empresa();
-        x = EmpresaDAO.getInstance().empresaGet("rr");
-        if (x!= null){System.out.println("DataAccess.main.main()"+x.getEmpresaEmail());}
+    public static void main(String[] args) throws URISyntaxException, IOException, Exception {        
+        Administrador x = AdministradorDAO.getInstance().AdministradorGet("a");
+        if(x!=null)
+            System.err.println("True");
+        else
+            System.err.println("False");
     
     }
     
