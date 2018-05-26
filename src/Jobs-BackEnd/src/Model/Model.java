@@ -14,6 +14,7 @@ import BussinessLogic.OferenteHasHabilidad;
 import BussinessLogic.Puesto;
 import BussinessLogic.PuestoHabilidad;
 import DataAccess.AdministradorDAO;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.List;
@@ -351,6 +352,15 @@ public class Model {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
             return false;}         
     }
+    public boolean login(Administrador obj){
+        try{
+             Administrador admin = DataAccess.AdministradorDAO.getInstance().AdministradorGet(obj.getAdministradorUserName());
+            return obj.getAdministradorClave().equals(admin.getAdministradorClave());
+        }
+        catch(Exception ex){
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            return false;}         
+    }
     public boolean update(Oferente o){
         try{
             DataAccess.OferenteDAO.getInstance().oferenteUpdate(o);
@@ -377,6 +387,24 @@ public class Model {
         catch(Exception ex){
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
             return false;       
+        }
+    }
+    public List<Puesto> readJobsByMonth(LocalDate d){
+        try{            
+            return DataAccess.PuestoDAO.getInstance().puestoListar(d);
+        }
+        catch(Exception ex){
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            return new ArrayList<Puesto>();       
+        }
+    }
+    public List<Puesto> readJobsLastFive(){
+        try{            
+            return DataAccess.PuestoDAO.getInstance().PuestoCincoMayores();
+        }
+        catch(Exception ex){
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            return new ArrayList<Puesto>();       
         }
     }
 }
