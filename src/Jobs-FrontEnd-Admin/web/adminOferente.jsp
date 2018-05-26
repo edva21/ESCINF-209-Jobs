@@ -4,6 +4,7 @@
     Author     : edva5
 --%>
 
+<%@page import="BussinessLogic.Administrador"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,8 +14,11 @@
  <meta name="viewport" content-width="device-width">
  <title>Remove a specific table row using jQuery.</title>
  <link rel="stylesheet" href="css/adminOferente.css">
+ 
+ 
  </head>
  <body>
+     <%@ include file="Header.jsp"%>
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
      <script src="js/adminOferente.js">
      <jsp:useBean id="oferentes" scope="request" type="List<BussinessLogic.Oferente>" class="java.util.ArrayList" />   

@@ -16,7 +16,7 @@
     </head>
     <body>
         <%@ include file="Header.jsp" %>
-        <h1>Hello World!</h1>
+        <hr>
         <div id="body" style="margin: 0 auto; width:85%; ">
             <div id="formularioDiv" style="display: block;vertical-align:top;">
                 <form method="POST" name="formulario" id="formulario" action="javascript:login();">
@@ -27,7 +27,15 @@
                     <tr><td class="titulo" colspan="2"><input class="boton" type="submit" value="Login"></td></tr>	   
                     </table>
                 </form>
-            </div>     
+            </div>
+            <div>
+                <H1>No tienes cuenta? </H1>
+                <div class="regresar">
+                    <form method="POST" action ="Registrar">
+                        <input class="button-registrar"  type="submit" value="Registrar">
+                    </form>
+                </div>        
+            </div>    
         </div>
         <script>
             function login(){
@@ -47,7 +55,7 @@
                  
             }
         function show(per){
-	window.alert("siiiiiiiiiiii");
+            location.href="main";
         }
        
         </script>

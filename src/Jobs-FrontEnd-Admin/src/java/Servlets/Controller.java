@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author edva5
  */
-@WebServlet(name = "Navigator", urlPatterns = {"/adminHabilidad","/Navigator","/adminMngmnt","/adminOferente","/adminEmpresa"})
+@WebServlet(name = "Navigator", urlPatterns = {"/adminReporte","/adminHabilidad","/Navigator","/adminMngmnt","/adminOferente","/adminEmpresa"})
 public class Controller extends HttpServlet {
 
     /**
@@ -52,6 +52,9 @@ public class Controller extends HttpServlet {
         else if(request.getServletPath().equals("/adminHabilidad")){            
             request.setAttribute("habilidades",Model.Model.getInstance().readAllHabilidadRoots());
             request.getRequestDispatcher("adminHabilidad.jsp").forward(request, response);
+        }
+        else if(request.getServletPath().equals("/adminReporte")){                        
+            request.getRequestDispatcher("adminPuestoReporte.jsp").forward(request, response);
         }
     }
 

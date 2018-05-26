@@ -10,13 +10,22 @@ import FEBussinesLogic.MensajeEstado;
 import BussinessLogic.Administrador;
 import BussinessLogic.Habilidad;
 import BussinessLogic.Nacionalidad;
+import BussinessLogic.Puesto;
+import FEBussinesLogic.PuestoDto;
+import Model.Model;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,12 +35,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author edva5
  */
-@MultipartConfig @WebServlet(name = "Administradores", urlPatterns = {"/sendHabilidades","/sendHabilidad","/sonsHabilidad","/addHabilidad","/Administradores","/add","/cambiarEstadoOferente","/cambiarEstadoEmpresa"})
+@MultipartConfig @WebServlet(name = "Administradores", urlPatterns = {"/AdminLogout","/AdminLogin","/sendJobReport","/sendHabilidades","/sendHabilidad","/sonsHabilidad","/addHabilidad","/Administradores","/add","/cambiarEstadoOferente","/cambiarEstadoEmpresa"})
 public class ControllerAdmin extends HttpServlet {
 
     /**
@@ -43,17 +53,10 @@ public class ControllerAdmin extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response){        
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{        
       switch(request.getServletPath()){                   
            case "/add":
-         {
-              try {
-               doAdd(request,response);
-              } catch (Exception ex) {
-                  response.setStatus(401); 
-               Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
-            }
-         }
+            doAdd(request,response);
               break;
            case "/cambiarEstadoOferente":
                doUpdateEstadoOferente(request, response);
@@ -73,6 +76,15 @@ public class ControllerAdmin extends HttpServlet {
             case "/sonsHabilidad":
                 doSendSons(request, response);
                 break;
+            case "/sendJobReport":
+                doSendJobsReports(request, response);
+                break;
+            case "/AdminLogin":
+                doAdminLogin(request, response);
+                break;
+            case "/AdminLogout":
+                doAdminLogout(request, response);
+                break;
           default:
               break;
       }           
@@ -85,7 +97,7 @@ public class ControllerAdmin extends HttpServlet {
         Administrador object = gson.fromJson(personaReader, Administrador.class);
         PrintWriter out;
         out = response.getWriter();
-         Model.Model.getInstance().create(object);        
+         Model.getInstance().create(object);        
         response.setContentType("application/json; charset=UTF-8");
         out.write(gson.toJson(object));        
         response.setStatus(200); // ok with content
@@ -108,7 +120,7 @@ public class ControllerAdmin extends HttpServlet {
         out = response.getWriter();
         response.setContentType("application/json; charset=UTF-8");
         out.write(gson.toJson(object));    
-            if (Model.Model.getInstance().updateEstado(object.getOferenteid(), object.getEstado()))
+            if (Model.getInstance().updateEstado(object.getOferenteid(), object.getEstado()))
                 response.setStatus(200); // ok with content
             else
                 response.setStatus(401); 
@@ -128,7 +140,7 @@ public class ControllerAdmin extends HttpServlet {
         out = response.getWriter();
         response.setContentType("application/json; charset=UTF-8");
         out.write(gson.toJson(object));    
-            if (Model.Model.getInstance().updateEstadoEmpresa(object.getOferenteid(), object.getEstado()))
+            if (Model.getInstance().updateEstadoEmpresa(object.getOferenteid(), object.getEstado()))
                 response.setStatus(200); // ok with content
             else
                 response.setStatus(401); 
@@ -186,7 +198,7 @@ public class ControllerAdmin extends HttpServlet {
         out = response.getWriter();
         response.setContentType("application/json; charset=UTF-8");
         out.write(gson.toJson(object));    
-            if (Model.Model.getInstance().create(object))
+            if (Model.getInstance().create(object))
                 response.setStatus(200); // ok with content
             else
                 response.setStatus(401); 
@@ -213,9 +225,9 @@ public class ControllerAdmin extends HttpServlet {
         Habilidad object = gson.fromJson(reader, Habilidad.class);
          List<Habilidad> l;
         if(object.getHabilidadNombre().equals("Inicio"))
-            l=Model.Model.getInstance().readAllHabilidadRoots();
+            l=Model.getInstance().readAllHabilidadRoots();
         else
-            l=Model.Model.getInstance().readAllHabilidadHijos(object.getHabilidadNombre()); 
+            l=Model.getInstance().readAllHabilidadHijos(object.getHabilidadNombre()); 
         PrintWriter out;
         String json =gson.toJson(l);
         out = response.getWriter();
@@ -241,7 +253,7 @@ public class ControllerAdmin extends HttpServlet {
         Reader reader = request.getReader();
         Habilidad object = gson.fromJson(reader, Habilidad.class);
         PrintWriter out;
-        object = Model.Model.getInstance().readHabilidad(object.getHabilidadNombre());        
+        object = Model.getInstance().readHabilidad(object.getHabilidadNombre());        
         out = response.getWriter();
         response.setContentType("application/json; charset=UTF-8");
         out.write(gson.toJson(object));    
@@ -259,39 +271,11 @@ public class ControllerAdmin extends HttpServlet {
             Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void doSendSonsOfHabilidad(HttpServletRequest request, HttpServletResponse response){                        
-        try {
-        Gson gson = new Gson();
-        BufferedReader reader = request.getReader();
-        Habilidad object = gson.fromJson(reader, Habilidad.class);              
-        PrintWriter out;
-         List<Habilidad> l;
-        if(object.getHabilidadNombre().equals("Inicio"))
-            l=Model.Model.getInstance().readAllHabilidadRoots();
-        else
-            l=Model.Model.getInstance().readAllHabilidadHijos(object.getHabilidadNombre()); 
-        String json =gson.toJson(l);
-        out = response.getWriter();
-        response.setContentType("application/json; charset=UTF-8");
-        out.write(json);                
-                response.setStatus(200); // ok with content           
-        } catch (IOException ex) {            
-            response.setStatus(401);             
-            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch(JsonSyntaxException ex){
-            response.setStatus(400); 
-            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch(Exception ex){
-            response.setStatus(401); 
-            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+   
     private void doSendHabilidades(HttpServletRequest request, HttpServletResponse response){                        
         try {
         Gson gson = new Gson();        
-        List<Habilidad> l=Model.Model.getInstance().readAllHabilidad();
+        List<Habilidad> l=Model.getInstance().readAllHabilidad();
         PrintWriter out;
         String json =gson.toJson(l);
         out = response.getWriter();
@@ -308,4 +292,57 @@ public class ControllerAdmin extends HttpServlet {
             Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    private void doSendJobsReports(HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException, IOException{                        
+        Gson gson = new Gson();
+        try {
+        Reader reader = request.getReader();
+        String object = gson.fromJson(reader, String.class);
+        PrintWriter out;
+        List<Puesto> l = Model.getInstance().readJobsByMonth(LocalDate.parse(object));
+        ArrayList<PuestoDto> p = new ArrayList<PuestoDto>();
+        l.stream().forEach(x->p.add(new PuestoDto(x)));
+        out = response.getWriter();
+        response.setContentType("application/json; charset=UTF-8");
+        out.write(gson.toJson(p));    
+        response.setStatus(200); // ok with content
+        } catch (IOException ex) {            
+            response.setStatus(401);             
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch(JsonSyntaxException ex){
+            response.setStatus(401); 
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch(Exception ex){
+            response.setStatus(401); 
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void doAdminLogin(HttpServletRequest request, HttpServletResponse response) {
+        try{
+        BufferedReader reader = request.getReader();
+        Gson gson = new Gson();
+         Administrador admin = gson.fromJson(reader, Administrador.class);          
+        PrintWriter out = response.getWriter();
+        boolean x = Model.getInstance().login(admin);
+        response.setContentType("application/json; charset=UTF-8");
+         out.write(gson.toJson(admin)); 
+         if(admin!=null){
+            HttpSession s =  request.getSession();
+            s.setAttribute("administrador", admin);
+            response.setStatus(200);
+        } // ok with content
+        if(x){response.setStatus(200);} // ok with content
+        else{response.setStatus(401);} 
+        
+      }
+      catch(Exception e){	
+        response.setStatus(401); //Bad request
+      }		
+    }
+    protected void doAdminLogout(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+            request.getSession().invalidate();
+            request.getRequestDispatcher("main.jsp").forward( request, response);          
+    }    
+    
 }

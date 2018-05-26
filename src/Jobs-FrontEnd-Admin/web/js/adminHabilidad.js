@@ -156,7 +156,8 @@ function printHabilidadSons(_habilidadNombre){ //borraLista e Imprime hijos de l
                                   success: 
                                     function(x){                                                                
                                      for(var i=0;i<x.length;i++)
-                                        printHabilidadItem(x[i]);                                     
+                                        printHabilidadItem(x[i]); 
+                                        //$("#comboox").atrr('item').add(x[i]);
                                     },
                                     error: function(xhr, ajaxOptions, thrownError){                        
                                             window.alert("Error al agregar Habilidad: "+xhr.status+" "+ajaxOptions);
