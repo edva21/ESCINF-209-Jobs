@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `empleosdb`.`Empresa` ;
 CREATE TABLE IF NOT EXISTS `empleosdb`.`Empresa` (
   `EmpresaEmail` VARCHAR(45) NOT NULL,
   `EmpresaNombre` VARCHAR(45) NOT NULL,
-  `EmpresaLocalizacion` VARCHAR(45) NOT NULL,
+  `EmpresaLocalizacion` VARCHAR(100) NOT NULL,
   `EmpresaTelefono` VARCHAR(45) NOT NULL,
   `EmpresaDescripcion` VARCHAR(100) NOT NULL,
   `EmpresaClave` VARCHAR(45) NOT NULL,
@@ -341,3 +341,4 @@ INSERT INTO empleosdb.Nacionalidad (`NacionalidadNombre`)
 	VALUES ('Vietnamita');
 
 alter table `empleosdb`.`Habilidad`  add column `HabilidadEsHoja` bool;
+alter table `empleosdb`.`Puesto`  add column `PuestoFecha` date;
