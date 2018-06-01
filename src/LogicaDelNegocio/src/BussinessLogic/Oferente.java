@@ -32,7 +32,7 @@ public class Oferente {
     public Oferente() {
     }
 
-    public Oferente(String oferenteEmail, String oferenteCedula, String oferenteNombre, String oferenteApellido, String oferenteTelefono, String oferenteResidencia, byte[] oferenteCurriculum, String oferenteEstadoDeCuenta, String oferenteUserName, String oferenteClave) {
+    public Oferente(String oferenteEmail, String oferenteCedula, String oferenteNombre, String oferenteApellido, String oferenteTelefono, String oferenteResidencia, byte[] oferenteCurriculum, String oferenteEstadoDeCuenta, String oferenteUserName, String oferenteClave, String oferenteNacionalidad) {
         this.oferenteEmail = oferenteEmail;
         this.oferenteCedula = oferenteCedula;
         this.oferenteNombre = oferenteNombre;
@@ -43,6 +43,7 @@ public class Oferente {
         this.oferenteEstadoDeCuenta = oferenteEstadoDeCuenta;
         this.oferenteUserName = oferenteUserName;
         this.oferenteClave = oferenteClave;
+        this.oferenteNacionalidad = oferenteNacionalidad;
     }
     
     /**
