@@ -8,7 +8,7 @@ package DataAccess;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import BussinessLogic.Empresa;
+import BussinessLogic.Oferente;
 
 /**
  *
@@ -16,9 +16,10 @@ import BussinessLogic.Empresa;
  */
 public class main {
     public static void main(String[] args) throws URISyntaxException, IOException, Exception {
-        Empresa x = new Empresa();
-        x = EmpresaDAO.getInstance().empresaGet("rr");
-        if (x!= null){System.out.println("DataAccess.main.main()"+x.getEmpresaEmail());}
+        Oferente o = new Oferente("q", "q", "q", "q", "q", "q", null, "q", "q","q", "Afgana");
+        boolean b;
+        OferenteDAO.getInstance().oferenteIngresar(o);
+        System.out.println("DataAccess.main.main()"+o.getOferenteEmail());
     
     }
     

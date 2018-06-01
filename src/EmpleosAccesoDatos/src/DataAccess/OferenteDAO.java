@@ -41,7 +41,7 @@ private static OferenteDAO INSTANCE;
             a.setOferenteResidencia(rs.getString("OferenteResidencia"));
             a.setOferenteTelefono(rs.getString("OferenteTelefono"));
             a.setOferenteUserName(rs.getString("OferenteUserName"));
-            a.setOferenteNacionalidad(rs.getString("OferenteNacionalidad"));
+            a.setOferenteNacionalidad(rs.getString("Nacionalidad"));
             return a;
         } catch (SQLException ex) {
             Logger.getLogger(OferenteDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -98,7 +98,7 @@ private static OferenteDAO INSTANCE;
     public void oferenteIngresar(Oferente a) throws Exception{
        getConnection();
         String sql="INSERT INTO Oferente (OferenteEmail,OferenteCedula,OferenteNombre,OferenteApellido,OferenteTelefono,"
-                + "OferenteResidencia,OferenteCurriculum,OferenteEstadoDeCuenta,OferenteUserName,OferenteClave,OferenteNacionalidad) VALUES('%s','%s','%s','%s','%s','%s','%x','%s','%s','%s','%s')";
+                + "OferenteResidencia,OferenteCurriculum,OferenteEstadoDeCuenta,OferenteUserName,OferenteClave,Nacionalidad) VALUES('%s','%s','%s','%s','%s','%s','%x','%s','%s','%s','%s')";
         sql=String.format(sql,a.getOferenteEmail(),a.getOferenteCedula(),a.getOferenteNombre(),a.getOferenteApellido(),
         a.getOferenteTelefono(),a.getOferenteResidencia(),a.getOferenteCurriculum(),a.getOferenteEstadoDeCuenta(),a.getOferenteUserName(),
         a.getOferenteClave(),a.getOferenteNacionalidad());
