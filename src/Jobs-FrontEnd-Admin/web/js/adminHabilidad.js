@@ -58,9 +58,8 @@ function goto(li){
         } 
         $(".item").remove();
         $(".leafitem").remove();
-        printpath();                     
+        printpath();             
         printHabilidadSons(li.id);       
-        leaf=false;
 }
 function add(habilidad){    
     var answer = confirm("Desea agregar la habilidad:"+habilidad);
@@ -173,7 +172,6 @@ function printHabilidadSons(_habilidadNombre){ //borraLista e Imprime hijos de l
         $(".leafitem").remove();
         printpath();             
         printHabilidadSons(li.innerHTML);
-        leaf=false;        
      }    
  }
 

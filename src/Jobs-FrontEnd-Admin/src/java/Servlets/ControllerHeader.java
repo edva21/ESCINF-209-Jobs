@@ -34,7 +34,6 @@ public class ControllerHeader extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
          switch(request.getServletPath()){
              case"/main":
-                request.setAttribute("habilidades",Model.Model.getInstance().readAllHabilidadRoots());
                 request.setAttribute("puestos", Model.Model.getInstance().readJobsLastFive());
                 request.getRequestDispatcher("main.jsp").forward(request, response);
         }

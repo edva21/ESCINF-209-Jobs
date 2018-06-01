@@ -15,12 +15,10 @@
           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="js/main.js"></script> 
     </head>
     <body>        
          <%@ include file="Header.jsp" %>
 <jsp:useBean id="puestos" scope="request" type="List<Puesto>" class="java.util.ArrayList" />                        
-<jsp:useBean id="habilidades" scope="request" type="List<BussinessLogic.Habilidad>" class="java.util.ArrayList" />   
 <div class="container">
   <h2>Top 5 Puestos</h2>  
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -71,18 +69,5 @@
     </a>
   </div>
 </div>
-    <div id="jobSearch">
-        <h2>Busqueda De Trabajos</h2>        
-                <ul id="path"></ul>
-        <ul id="habilidadList">            
-            <%int y = 0;for(BussinessLogic.Habilidad h : habilidades){ %> 
-            <%if(!h.isHabilidadEsHoja()){%>
-            <li  class="itemSearch" onclick="javascript:navHabilidad(this)"><%=h.getHabilidadNombre()%></li>
-            <%}else{%>
-            <li  class="leafitem" onclick="javascript:navHabilidad(this)"><font color="red"><%=h.getHabilidadNombre()%></font><input id="<%=h.getHabilidadNombre()%>" onclick="javascrip:checkleaf(this)" type="checkbox"><input id="<%=h.getHabilidadNombre()%>nmbr" type="number" onchange="changedNumber(this)" min="1" max="100" style="display:none"></li>
-            <%}}%>                        
-        </ul>
-    </div>
-        
     </body>
 </html>
