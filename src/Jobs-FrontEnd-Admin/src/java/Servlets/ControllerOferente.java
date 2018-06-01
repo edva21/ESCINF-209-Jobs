@@ -9,8 +9,11 @@ import BussinessLogic.Nacionalidad;
 import BussinessLogic.Oferente;
 import Model.Model;
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +22,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author fabio
  */
-@WebServlet(name = "ControllerOferente", urlPatterns = {"/ControllerOferente", "/OfferentLogin", "/OferenteRegistro", "/OferenteForm"})
+@WebServlet(name = "ControllerOferente", urlPatterns = {"/ControllerOferente", "/OfferentLogin", "/OferenteRegistro", "/OferenteForm", "/GetNac"})
 public class ControllerOferente extends HttpServlet {
 
     /**
@@ -46,6 +50,9 @@ public class ControllerOferente extends HttpServlet {
             case "/OferenteRegistro":
                 this.doOferenteRegistro(request, response);
                 break;
+            case "/GetNac":
+                this.doGetNacionalidad(request, response);
+                break;
         }
     }
 
@@ -61,12 +68,7 @@ public class ControllerOferente extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Nacionalidad> nac = Model.getInstance().readAllNacionalidad();
-        String json = new Gson().toJson(nac);
-
-        response.setContentType("application/json");  // Set content type of the response so that jQuery knows what it can expect.
-        response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-        response.getWriter().write(json);       // Write response body.
+        processRequest(request, response);
     }
 
     /**
@@ -100,39 +102,63 @@ public class ControllerOferente extends HttpServlet {
             Oferente oferente = gson.fromJson(reader, Oferente.class);
 
             PrintWriter out = response.getWriter();
-            boolean x = Model.getInstance().login(oferente);
+            oferente = Model.getInstance().login(oferente);
             response.setContentType("application/json; charset=UTF-8");
             out.write(gson.toJson(oferente));
-            if (x) {
+            if (oferente != null) {
+                HttpSession s = request.getSession();
+                s.setAttribute("oferente", oferente);
                 response.setStatus(200);
             } // ok with content
             else {
                 response.setStatus(401);
             }
-        } catch (Exception e) {
+        } catch (JsonIOException | JsonSyntaxException | IOException e) {
             response.setStatus(401); //Bad request
         }
     }
 
     private void doOferenteRegistro(HttpServletRequest request, HttpServletResponse response) {
         try {
-            BufferedReader reader = request.getReader();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(request.getPart("empresa").getInputStream()));
             Gson gson = new Gson();
             Oferente oferente = gson.fromJson(reader, Oferente.class);
-            oferente.setOferenteEstadoDeCuenta("No Aceptado");
+            //oferente.setOferenteEstadoDeCuenta("No Aceptado");
+            oferente.setOferenteCurriculum(null);
 
             PrintWriter out = response.getWriter();
             boolean x = Model.getInstance().create(oferente);
-            response.setContentType("application/json; charset=UTF-8");
-            out.write(gson.toJson(oferente));
             if (x) {
+                response.setContentType("application/json; charset=UTF-8");
+                out.write(gson.toJson(oferente));
                 response.setStatus(200);
             } // ok with content
             else {
                 response.setStatus(401);
             }
-        } catch (Exception e) {
+        } catch (JsonIOException | JsonSyntaxException | IOException | ServletException e) {
             response.setStatus(401); //Bad request
+        }
+    }
+
+    private void doGetNacionalidad(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            List<Nacionalidad> nac = Model.getInstance().readAllNacionalidad();
+            List<String> l = new ArrayList<>();
+            for (int i = 0; i < nac.size(); i++) {
+                l.add(nac.get(i).getNacionalidadNombre());
+            }
+            String json = new Gson().toJson(nac);
+
+            response.setContentType("application/json; charset=UTF-8");
+            response.getWriter().write(json);       // Write response body.
+            if (!nac.isEmpty()) {
+                response.setStatus(200);
+            } else {
+                response.setStatus(401);
+            }
+        } catch (IOException ex) {
+            response.setStatus(401);
         }
     }
 

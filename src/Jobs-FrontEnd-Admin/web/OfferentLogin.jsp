@@ -19,36 +19,35 @@
         <div id="body" style="margin: 0 auto; width:85%; ">
             <div id="formularioDiv" style="display: block;vertical-align:top;">
                 <form method="POST" name="formulario" id="formulario" action="javascript:login();">
-                <table border=0 cellpadding=3 cellspacing=4 >
-		   <tr><td colspan="2" class="titulo">Cuenta Oferente</td></tr>
-		   <tr><td class="etiqueta">Correo</td><td><input type="text" name="correo" id="correo"></td></tr>
-		   <tr><td class="etiqueta">Clave</td><td><input type="password" name="clave" id="clave"></td></tr>
-                    <tr><td class="titulo" colspan="2"><input class="boton" type="submit" value="Login"></td></tr>	   
+                    <table border=0 cellpadding=3 cellspacing=4 >
+                        <tr><td colspan="2" class="titulo">Cuenta Oferente</td></tr>
+                        <tr><td class="etiqueta">Correo</td><td><input type="text" name="correo" id="correo"></td></tr>
+                        <tr><td class="etiqueta">Clave</td><td><input type="password" name="clave" id="clave"></td></tr>
+                        <tr><td class="titulo" colspan="2"><input class="boton" type="submit" value="Login"></td></tr>	   
                     </table>
                 </form>
             </div>     
         </div>
         <script>
-            function login(){
-                oferente = {oferenteEmail:$("#correo").val(), oferenteClave:$("#clave").val()};     
-                 $.ajax({type: "POST", 
-                  url:"OferenteLogin", 
-                  data: JSON.stringify(oferente), 
-                  dataType:"json",
-                  success: 
-                    function(obj){
-                        show(obj); 
-                    },
-                  error: function(status){
-                         window.alert("no");
-                    }                    
-                });   
-                 
+            function login() {
+                oferente = {oferenteEmail: $("#correo").val(), oferenteClave: $("#clave").val()};
+                $.ajax({type: "POST",
+                    url: "OfferentLogin",
+                    data: JSON.stringify(oferente),
+                    dataType: "json",
+                    success:
+                            function (obj) {
+                                show(obj);
+                            },
+                    error: function (status) {
+                        window.alert("no");
+                    }
+                });
+
             }
-        function show(per){
-	window.alert("siiiiiiiiiiii");
-        }
-       
+            function show(per) {
+                location.href = "main.jsp";
+            }
         </script>
     </body>
 </html>
