@@ -453,4 +453,12 @@ public class Model {
         else 
               return  "SELECT * FROM Puesto";             
     }
+    public Puesto readPuesto(int idPuesto){
+        try {
+            return DataAccess.PuestoDAO.getInstance().puestoGet(idPuesto);            
+        } catch (Exception ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
 }
