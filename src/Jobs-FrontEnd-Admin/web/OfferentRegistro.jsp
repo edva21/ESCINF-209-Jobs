@@ -50,15 +50,13 @@
         </div>
         <script>
             function registrarOfferente() {
-                oferente = {oferenteEmail: $("#correo").val(), ofrenteCedula: $("#cedula").val(), ofrenteTelefono: $("#telefono").val(), ofrenteResidencia: $("#residencia").val(),
-                    ofrenteNombre: $("#nombre").val(), ofrenteApellido: $("#apellido").val(), ofrenteUserName: $("#username").val(), oferenteClave: $("#clave").val(), oferenteNacionalidad: $("#nacionalidad").val(), oferenteEstadoDeCuenta: "ESPERA"};
-                data = new FormData();
-                data.append("oferente", JSON.stringify(oferente));
+                oferente = {oferenteEmail: $("#correo").val(), oferenteCedula: $("#cedula").val(), oferenteTelefono: $("#telefono").val(), oferenteResidencia: $("#residencia").val(),
+                    oferenteNombre: $("#nombre").val(), oferenteApellido: $("#apellido").val(), oferenteUserName: $("#username").val(), oferenteClave: $("#clave").val(), oferenteNacionalidad: $("#nacionalidad").val(), oferenteEstadoDeCuenta: "ESPERA"};
+                
                 $.ajax({type: "POST",
                     url: "OferenteRegistro",
-                    data: data,
-                    processData: false,
-                    contentType: false,
+                    data: JSON.stringify(oferente),
+                    dataType: "json",
                     success:
                             function (obj) {
                                 show(obj);

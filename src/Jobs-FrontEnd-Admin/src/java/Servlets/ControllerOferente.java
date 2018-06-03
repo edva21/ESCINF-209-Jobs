@@ -120,10 +120,9 @@ public class ControllerOferente extends HttpServlet {
 
     private void doOferenteRegistro(HttpServletRequest request, HttpServletResponse response) {
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(request.getPart("empresa").getInputStream()));
+            BufferedReader reader = request.getReader();
             Gson gson = new Gson();
             Oferente oferente = gson.fromJson(reader, Oferente.class);
-            //oferente.setOferenteEstadoDeCuenta("No Aceptado");
             oferente.setOferenteCurriculum(null);
 
             PrintWriter out = response.getWriter();
@@ -136,7 +135,7 @@ public class ControllerOferente extends HttpServlet {
             else {
                 response.setStatus(401);
             }
-        } catch (JsonIOException | JsonSyntaxException | IOException | ServletException e) {
+        } catch (JsonIOException | JsonSyntaxException | IOException e) {
             response.setStatus(401); //Bad request
         }
     }
