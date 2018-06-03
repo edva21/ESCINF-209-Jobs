@@ -169,6 +169,18 @@ public class PuestoDAO extends DAO{
          desconectar();
         return  resultado;
     }
-    
+    public Puesto puestoGet(int idPuesto)throws Exception{
+         getConnection();
+        String sql="select * from Puesto where idPuesto='%n'";
+        sql = String.format(sql,idPuesto);
+        ResultSet rs =  executeQuery(sql);
+        if (rs.next()) { 
+            Puesto a= puesto(rs);
+            desconectar();
+            return a;     
+        }
+        else
+            throw new Exception ("Puesto no Existe");        
+    }
     
 }
