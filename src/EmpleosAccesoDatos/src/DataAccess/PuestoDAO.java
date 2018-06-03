@@ -171,8 +171,7 @@ public class PuestoDAO extends DAO{
     }
     public Puesto puestoGet(int idPuesto)throws Exception{
          getConnection();
-        String sql="select * from Puesto where idPuesto='%n'";
-        sql = String.format(sql,idPuesto);
+        String sql="select * from Puesto where idPuesto="+idPuesto;        
         ResultSet rs =  executeQuery(sql);
         if (rs.next()) { 
             Puesto a= puesto(rs);
