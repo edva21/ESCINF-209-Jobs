@@ -7,6 +7,7 @@ package Servlets;
 
 import BussinessLogic.Administrador;
 import BussinessLogic.Habilidad_Porcentaje;
+import BussinessLogic.Puesto;
 import Model.Model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,6 +20,8 @@ import java.lang.ProcessBuilder.Redirect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,7 +33,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author edva5
  */
-@WebServlet(name = "ControllerPuesto", urlPatterns = {"/ControllerPuesto","/searchJobs"})
+@WebServlet(name = "ControllerPuesto", urlPatterns = {"/ControllerPuesto","/searchJobs","/searchJob"})
 public class ControllerPuesto extends HttpServlet {
 
     /**
@@ -48,6 +51,9 @@ public class ControllerPuesto extends HttpServlet {
         switch(request.getServletPath()){    
             case "/searchJobs":
                 doSearchJobs(request, response);
+                break;
+            case "/searchJob":
+                doSearchJob(request, response);
                 break;
         }
     }
@@ -112,4 +118,22 @@ public class ControllerPuesto extends HttpServlet {
         response.setStatus(401); //Bad request
       }		
     }
+    private void doSearchJob(HttpServletRequest request, HttpServletResponse response) {        
+        //BufferedReader reader = request.getReader();        
+        Gson gson = new GsonBuilder().create(); 
+        Reader reader;
+        try {
+            reader = request.getReader();
+            int id=gson.fromJson(reader, int.class);
+            PrintWriter out = response.getWriter();        
+             response.setContentType("application/json; charset=UTF-8");
+             Puesto p =Model.getInstance().readPuesto(id);
+              out.write(gson.toJson(p));                          
+              response.setStatus(200); //Good request
+        } catch (IOException ex) {
+            Logger.getLogger(ControllerPuesto.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }   
+        
+      
 }

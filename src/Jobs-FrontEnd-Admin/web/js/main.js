@@ -210,3 +210,27 @@ function updateMSItem(mainStackItem){
 function removeMSItem(mainStackItem){     
         $('#'+mainStackItem.nombre+"msi").remove();
 }
+function popUpCarrousel(div){
+    searchJob(div.id);
+}
+function searchJob(number){ //borraLista e Imprime hijos de la habilidad                                                                      
+                    $.ajax({type: "POST", 
+                                url:"searchJob", 
+                                data:JSON.stringify(number),
+                                datatype:"application/json",
+                                  processData: false, 
+                                  contentType: false,   
+                                  async: true,
+                                  success: 
+                                    function(x){                                                                
+                                     showJobDescrition(x);
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError){                        
+                                            window.alert("Error al Buscar Trabajos: "+xhr.status+" "+ajaxOptions);                                            
+                                            window.alert(xhr);                                            
+                                    }                    
+                            }); 
+}
+function showJobDescrition(x){
+    alert(x);
+}

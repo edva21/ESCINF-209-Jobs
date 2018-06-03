@@ -43,7 +43,7 @@
         
         <%int x = 0; for(Puesto p : puestos){ %>
             <%if(x == 1){%>
-                <div class="item">
+                <div id="<%=p.getPuestoPK().getIdPuesto()%>" onclick="javascript:popUpCarrousel(this)" class="item">
                         <h1> &nbsp <%=p.getPuestoNombre()%></h1> 
                         <h1>&nbsp <%=p.getPuestoDescripcion()%></h1>
                         <h1>&nbsp <%=p.getPuestoSalario()%></h1>
@@ -51,7 +51,7 @@
                 </div>
             <%}%>
             <%if(x == 0){ x = 1;%>
-                    <div class="item active">
+                    <div id="<%=p.getPuestoPK().getIdPuesto()%>" onclick="javascript:popUpCarrousel(this)" class="item active">
                         <h1> &nbsp <%=p.getPuestoNombre()%></h1> 
                         <h1>&nbsp <%=p.getPuestoDescripcion()%></h1>
                         <h1>&nbsp <%=p.getPuestoSalario()%></h1>
