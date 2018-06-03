@@ -8,12 +8,15 @@ package Model;
 import BussinessLogic.Administrador;
 import BussinessLogic.Empresa;
 import BussinessLogic.Habilidad;
+import BussinessLogic.Habilidad_Porcentaje;
 import BussinessLogic.Nacionalidad;
 import BussinessLogic.Oferente;
 import BussinessLogic.OferenteHasHabilidad;
 import BussinessLogic.Puesto;
 import BussinessLogic.PuestoHabilidad;
 import DataAccess.AdministradorDAO;
+import DataAccess.HabilidadDAO;
+import DataAccess.PuestoDAO;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -406,5 +409,48 @@ public class Model {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
             return new ArrayList<Puesto>();       
         }
+    }
+    public Oferente login(Oferente obj){
+          try{
+             Oferente oferente = DataAccess.OferenteDAO.getInstance().oferenteGet(obj.getOferenteEmail());
+            if( oferente!= null && obj.getOferenteClave().equals(oferente.getOferenteClave())){
+                return oferente;
+            }
+            else return null;
+        }
+        catch(Exception ex){
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            return null;}         
+          
+    }
+    public List<Puesto> readPuestos(ArrayList<Habilidad_Porcentaje> habilidades){
+        String attributes="idPuesto,Empresa_EmpresaEmail,PuestoNombre,Empresa_EmpresaEmail,PuestoActivo,PuestoDescripcion,PuestoSalario,PuestoFecha";
+        if(habilidades!=null){                    
+                try {
+                    return DataAccess.PuestoDAO.getInstance().puestoListar(buildQuery(habilidades, 0, attributes));
+                } catch (Exception ex) {
+                    Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+                    return new ArrayList<>();
+                }
+            }
+            else            
+                return PuestoDAO.getInstance().puestoListar();            
+        }       
+    
+    
+    private String buildQuery(ArrayList<Habilidad_Porcentaje> habilidades,int i,String things){
+        
+        if(i<habilidades.size()-1){
+             return "SELECT "+things+" FROM ("+buildQuery(habilidades, i+1, things)+"),PuestoHabilidad "
+                    + "WHERE idPuesto=puestoIdPuesto "
+                    + "AND Habilidad_HabilidadNombre="+habilidades.get(i).getNombre()+" "
+                    + "AND Puesto_HabilidadPorcentaje<="+habilidades.get(i).getPorcentaje();}
+        else if (i==habilidades.size()-1){
+             return "SELECT "+things+" FROM Puesto,PuestoHabilidad "
+                    + "WHERE idPuesto=puestoIdPuesto "
+                    + "AND Habilidad_HabilidadNombre="+habilidades.get(i).getNombre()+" "
+                    + "AND Puesto_HabilidadPorcentaje<="+habilidades.get(i).getPorcentaje();}
+        else 
+              return  "SELECT * FROM Puesto";             
     }
 }
