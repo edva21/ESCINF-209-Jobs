@@ -23,7 +23,7 @@ public class PuestoPK {
     
     /**
      * @return the idPuesto
-     */
+     */    
     public int getIdPuesto() {
         return idPuesto;
     }
