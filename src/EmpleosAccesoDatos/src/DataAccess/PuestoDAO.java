@@ -23,8 +23,9 @@ import java.util.logging.Logger;
  */
 public class PuestoDAO extends DAO{
     private static PuestoDAO INSTANCE;
+    private String attributes;
     private PuestoDAO() {
-   
+        attributes="Puesto.idPuesto,Puesto.Empresa_EmpresaEmail,Puesto.PuestoNombre,Puesto.Empresa_EmpresaEmail,Puesto.PuestoActivo,Puesto.PuestoDescripcion,Puesto.PuestoSalario,Puesto.PuestoFecha";
     }
     public static PuestoDAO getInstance(){
         if (INSTANCE == null){
@@ -39,7 +40,7 @@ public class PuestoDAO extends DAO{
             a.setPuestoPK(puestoPK);
             a.setPuestoNombre(rs.getString("PuestoNombre"));
             a.setEmpresa(EmpresaDAO.getInstance().empresaGet(rs.getString("Empresa_EmpresaEmail")));
-            a.setPuestoActivo(rs.getBoolean("PuestoActivo"));
+            a.setPuestoActivo(rs.getBoolean("PuestoActivo"));//
             a.setPuestoDescripcion(rs.getString("PuestoDescripcion"));
             a.setPuestoSalario(rs.getDouble("PuestoSalario"));
             if(rs.getDate("PuestoFecha")!=null)
@@ -98,14 +99,18 @@ public class PuestoDAO extends DAO{
         return resultado;
     }
      
-    public List<Puesto> puestoListar() throws Exception{
+    public List<Puesto> puestoListar() {
          getConnection();
         List<Puesto> resultado=new ArrayList<>();
         try {
             String sql="select * from Puesto";
             ResultSet rs =  executeQuery(sql);
             while (rs.next()) {
-                resultado.add(puesto(rs));
+                try {
+                    resultado.add(puesto(rs));
+                } catch (Exception ex) {
+                    Logger.getLogger(PuestoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }        
         } catch (SQLException ex) {
             Logger.getLogger(PuestoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -150,7 +155,20 @@ public class PuestoDAO extends DAO{
         }
          desconectar();
     }
-    
+    public List<Puesto> puestoListar(String whereSQL) throws Exception{
+         getConnection();
+        List<Puesto> resultado=new ArrayList<>();
+        try {
+            String sql=whereSQL;
+            ResultSet rs =  executeQuery(sql);
+            while (rs.next())
+                resultado.add(puesto(rs));            
+        } catch (SQLException ex) {
+            Logger.getLogger(PuestoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         desconectar();
+        return  resultado;
+    }
     
     
 }
