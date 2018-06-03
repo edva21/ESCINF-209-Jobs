@@ -8,6 +8,7 @@ package Servlets;
 import BussinessLogic.Administrador;
 import BussinessLogic.Habilidad_Porcentaje;
 import BussinessLogic.Puesto;
+import FEBussinesLogic.PuestoDto;
 import Model.Model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -128,7 +129,7 @@ public class ControllerPuesto extends HttpServlet {
             PrintWriter out = response.getWriter();        
              response.setContentType("application/json; charset=UTF-8");
              Puesto p =Model.getInstance().readPuesto(id);
-              out.write(gson.toJson(p));                          
+              out.write(gson.toJson(new PuestoDto(p)));                          
               response.setStatus(200); //Good request
         } catch (IOException ex) {
             Logger.getLogger(ControllerPuesto.class.getName()).log(Level.SEVERE, null, ex);

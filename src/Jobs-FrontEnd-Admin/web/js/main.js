@@ -232,5 +232,9 @@ function searchJob(number){ //borraLista e Imprime hijos de la habilidad
                             }); 
 }
 function showJobDescrition(x){
-    alert(x);
+    alert("Nombre:"+x.puestoNombre
+            +"\nDescripcion:"+x.puestoDescripcion
+            +"\nSalario:"+x.puestoSalario
+            +"\nEmpresa:"+x.empresa
+            +"\nFecha:"+x.puestoFecha);
 }
