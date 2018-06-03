@@ -20,12 +20,13 @@
 </head>
 <body>
     <%@ include file="Header.jsp"%>
-    <input id="monthpicker" width="276" />
-    <button type="button" class="btn btn-primary" onclick="javascript:bringpdf()()">Generar Reporte</button>    
+    <input id="monthPicker" width="276" />
+    <button type="button" class="btn btn-primary" onclick="javascript:bringpdf()">Generar Reporte</button>    
     <script>
         $('#monthPicker').datetimepicker({
-        format: 'MM-YYYY'
+        format: 'YYYY-MM'
         })
+        $('#monthPicker').text("YYYY-MM");
     </script>
 </body>
 </html>

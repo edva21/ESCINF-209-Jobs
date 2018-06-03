@@ -298,7 +298,8 @@ public class ControllerAdmin extends HttpServlet {
         Reader reader = request.getReader();
         String object = gson.fromJson(reader, String.class);
         PrintWriter out;
-        List<Puesto> l = Model.getInstance().readAllPuesto();
+        LocalDate date = LocalDate.parse(object+"-01");
+        List<Puesto> l = Model.getInstance().readJobsByMonth(date);
         ArrayList<PuestoDto> p = new ArrayList<PuestoDto>();
         l.stream().forEach(x->p.add(new PuestoDto(x)));
         out = response.getWriter();

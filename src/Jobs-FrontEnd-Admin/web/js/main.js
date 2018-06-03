@@ -21,6 +21,7 @@ function changedNumber(nmbr){
         return (element.nombre===currentHanility);
     }).forEach(function (element) {
         element.porcentaje=$('#'+nmbr.id).val();
+        updateMSItem(element);
     });    
 }         
 stack.push("Inicio");
@@ -36,11 +37,12 @@ function checkleaf(chckBx){
         $('#'+chckBx.id).prop('checked',true);
         $('#'+chckBx.id+"nmbr").show();        
         $('#'+chckBx.id+"nmbr").val(100);     
-        var index = checkedStack.indexOf(chckBx.id);
+        var index = checkedStack.indexOf(chckBx.id);        
         if (index < 0){
         mainStack.push({'nombre':chckBx.id,'porcentaje':100});
+        printMSItem(mainStack[mainStack.length-1]);
         checkedStack.push(chckBx.id);
-        alert(checkedStack);
+        //alert(checkedStack);
         }
        // for(var i=0;i<checkedStack.length;i++)
          //   alert(checkedStack[i]);
@@ -55,8 +57,9 @@ function checkleaf(chckBx){
     });
     
         var index = checkedStack.indexOf(chckBx.id);
-        if (index > -1) {
+        if (index > -1) {            
             checkedStack.splice(index, 1);
+            removeMSItem(mainStack[index]);
             mainStack.splice(index, 1);
         }        
         //for(var i=0;i<checkedStack.length;i++)
@@ -100,6 +103,7 @@ function printHabilidadItem(habilidad){
     else
         $("#habilidadList").append("<li class=\"itemSearch\" onclick=\"javascript:navHabilidad(this)\"  >"+habilidad.habilidadNombre+"</li>");    
 }
+
 function printSons(data){
     $("#habilidadList").empty();
     var arr=JSON.parse(data);
@@ -158,8 +162,6 @@ function printHabilidadSons(_habilidadNombre){ //borraLista e Imprime hijos de l
                                     function(x){                                                                
                                      for(var i=0;i<x.length;i++)
                                         printHabilidadItem(x[i]); 
-                                        
-                                        //$("#comboox").atrr('item').add(x[i]);
                                     },
                                     error: function(xhr, ajaxOptions, thrownError){                        
                                             window.alert("Error al agregar Habilidad: "+xhr.status+" "+ajaxOptions);
@@ -177,5 +179,34 @@ function printHabilidadSons(_habilidadNombre){ //borraLista e Imprime hijos de l
      }    
  }
 
-
-
+function searchJobs(){ //borraLista e Imprime hijos de la habilidad                              
+                    var parent_hability=null;
+                    if(stack.length>1){
+                        parent_hability=stack[stack.length-1];
+                    }                    
+                    $.ajax({type: "POST", 
+                                url:"searchJobs", 
+                                data:JSON.stringify(mainStack),
+                                datatype:"application/json",
+                                  processData: false, 
+                                  contentType: false,   
+                                  async: true,
+                                  success: 
+                                    function(x){                                                                
+                                     for(var i=0;i<x.length;i++)                                        
+                                        show(x[i]);
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError){                        
+                                            window.alert("Error al Buscar Trabajos: "+xhr.status+" "+ajaxOptions);                                            
+                                    }                    
+                            }); 
+}
+function printMSItem(mainStackItem){     
+        $("#carrito table").append("<tr id=\""+mainStackItem.nombre+"msi\" class=\"carritoItem\"><td class=\"nombre\">"+mainStackItem.nombre+"</td><td class=\"porcentaje\">"+mainStackItem.porcentaje+"</td></tr>");
+}
+function updateMSItem(mainStackItem){     
+        $('#'+mainStackItem.nombre+"msi .porcentaje").html(mainStackItem.porcentaje);
+}
+function removeMSItem(mainStackItem){     
+        $('#'+mainStackItem.nombre+"msi").remove();
+}

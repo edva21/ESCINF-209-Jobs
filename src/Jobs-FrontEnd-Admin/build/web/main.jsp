@@ -16,6 +16,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="js/main.js"></script> 
+        <link rel="stylesheet" href="css/main.css">
     </head>
     <body>        
          <%@ include file="Header.jsp" %>
@@ -71,8 +72,10 @@
     </a>
   </div>
 </div>
+    <div id="busquedaCar">
     <div id="jobSearch">
-        <h2>Busqueda De Trabajos</h2>        
+        <h2>Busqueda De Trabajos</h2> 
+        <button type="button" class="btn btn-info" onclick="javascript:searchJobs()">Buscar Puestos</button>
                 <ul id="path"></ul>
         <ul id="habilidadList">            
             <%int y = 0;for(BussinessLogic.Habilidad h : habilidades){ %> 
@@ -83,6 +86,15 @@
             <%}}%>                        
         </ul>
     </div>
-        
+        <div id="carrito">
+            <h3>Carrito</h3> 
+             <table>
+                <tr>
+                    <th>Habilidad</th>
+                    <th>Porcentaje</th>                    
+                </tr>
+            </table> 
+        </div>
+        </div>
     </body>
 </html>
